@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckwe0b3r6ecca"]
+
+[ext_resource type="Script" uid="uid://cwd0g81klcvl6" path="res://scenes/exit.gd" id="1_l0aq0"]
+
+[node name="Exit" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_l0aq0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

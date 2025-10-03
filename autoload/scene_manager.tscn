@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcby1rm3p8qqu"]
+
+[ext_resource type="Script" uid="uid://cfkou1h0bj72r" path="res://autoload/scene_manager.gd" id="1_r5jaw"]
+
+[node name="SceneManager" type="CanvasLayer" node_paths=PackedStringArray("transition_rect")]
+layer = 10
+script = ExtResource("1_r5jaw")
+transition_rect = NodePath("ColorRect")
+default_scene = "res://scenes/screens/main_menu.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
