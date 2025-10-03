@@ -9,6 +9,7 @@ extends Button
 @export var focus_slant: float = 0.125
 
 @export var pointer: Control
+@export var focus_panel: Panel
 
 var normal_base_margin:  float
 var hover_base_margin:   float
@@ -18,6 +19,7 @@ var font_var: FontVariation
 
 var normal:      StyleBox
 var hover:       StyleBox
+var focus:       StyleBoxFlat
 var pressed_box: StyleBox
 
 var base_slant: float
@@ -52,6 +54,9 @@ func _ready() -> void:
 
 	height = size.y
 
+	focus = focus_panel.get_theme_stylebox("panel").duplicate()
+	focus_panel.add_theme_stylebox_override("panel", focus)
+
 func _process(delta: float) -> void:
 	var margin: float = 0.0
 	var slant:  float = 0.0
@@ -66,6 +71,8 @@ func _process(delta: float) -> void:
 		margin = focus_margin
 		slant  = focus_slant
 		target_size = base_width
+	
+	focus.border_width_left = floori(lerpf(focus.border_width_left, focus_panel.size.x if has_focus() else 0.0, delta * speed))
 
 	normal.content_margin_left      = lerpf(normal.content_margin_left,      margin + normal_base_margin,  delta * speed)
 	hover.content_margin_left       = lerpf(hover.content_margin_left,       margin + hover_base_margin,   delta * speed)
@@ -77,7 +84,5 @@ func _process(delta: float) -> void:
 	if pointer != null:
 		pointer.size.x     = lerpf(pointer.size.x,     target_size, delta * speed)
 		pointer.position.x = lerpf(pointer.position.x, base_x + base_width - target_size, delta * speed)
-
-		print(base_x + base_width)
 
 	size.y = height

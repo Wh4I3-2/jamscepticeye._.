@@ -19,7 +19,7 @@ func _ready() -> void:
 
 	change_scene(default_scene)
 
-func change_scene(path: String, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null) -> void:
+func change_scene(path: String, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null, swap_delay: float = 0.0) -> void:
 	var scene: PackedScene = null
 	if path in cached_scenes.keys():
 		scene = cached_scenes.get(path)
@@ -31,12 +31,12 @@ func change_scene(path: String, transition_enter: SceneTransition = null, transi
 		print("No scene at \"%s\"" % path)
 		return
 
-	_change_scene(scene, transition_enter, transition_exit)
+	_change_scene(scene, transition_enter, transition_exit, swap_delay)
 
-func change_scene_packed(scene: PackedScene, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null) -> void:
-	_change_scene(scene, transition_enter, transition_exit)
+func change_scene_packed(scene: PackedScene, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null, swap_delay: float = 0.0) -> void:
+	_change_scene(scene, transition_enter, transition_exit, swap_delay)
 
-func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transition_exit: SceneTransition) -> void:
+func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transition_exit: SceneTransition, swap_delay: float) -> void:
 	if (!scene.can_instantiate()):
 		print("Failed to instantiate scene at \"%s\"" % scene.resource_path)
 		return
@@ -45,6 +45,8 @@ func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transi
 	
 	transition_rect.visible = true
 	if transition_enter != null: await show_transition(transition_enter, true)
+
+	if swap_delay > 0: await get_tree().create_timer(swap_delay).timeout
 
 	_swap_scene.call_deferred(scene.instantiate())
 	

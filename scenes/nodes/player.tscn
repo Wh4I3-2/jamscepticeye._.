@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://prjkae0ddd68"]
+
+[ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
+[ext_resource type="Script" uid="uid://dp8xqehngnd2v" path="res://scripts/hurtbox.gd" id="2_qmni6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
+size = Vector2(8, 8)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_d5i2w")
+hurtbox = NodePath("HurtBox")
+diagonal_strength = 0.1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kri6c")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("hurtbox_owner")]
+script = ExtResource("2_qmni6")
+hurtbox_owner = NodePath("..")
+metadata/_custom_type_script = "uid://dp8xqehngnd2v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_kri6c")
+debug_color = Color(0.8882779, 0.33110818, 1.92523e-07, 0.41960785)

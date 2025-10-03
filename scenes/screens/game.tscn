@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0avjutoffgvt"]
+
+[ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
+[ext_resource type="PackedScene" uid="uid://d0g4v0scxicwg" path="res://scenes/nodes/projectiles/simple.tscn" id="2_clfej"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iwlfa"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_clfej"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mu8e5"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o78e0"]
+normal = Vector2(0, 1)
+
+[node name="Game" type="Node2D"]
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(0, 80)
+shape = SubResource("WorldBoundaryShape2D_iwlfa")
+
+[node name="Left" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(-80, 0)
+shape = SubResource("WorldBoundaryShape2D_clfej")
+
+[node name="Right" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(80, 0)
+shape = SubResource("WorldBoundaryShape2D_mu8e5")
+
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(0, -80)
+shape = SubResource("WorldBoundaryShape2D_o78e0")
+
+[node name="Player" parent="." instance=ExtResource("1_iwlfa")]
+position = Vector2(0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Projectile" parent="." instance=ExtResource("2_clfej")]
+position = Vector2(-3, -22)
+collision_layer = 1
+collision_mask = 1

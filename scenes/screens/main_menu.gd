@@ -8,7 +8,12 @@ extends CanvasLayer
 func _ready() -> void:
 	if play_button != null: play_button.pressed.connect(
 		func() -> void:
-			pass
+			SceneManager.change_scene(
+				"res://scenes/screens/game.tscn", 
+				SceneTransition.of(0.8, SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_IN_OUT),
+				SceneTransition.of(0.3, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
+				0.5
+			)
 	)
 
 	if settings_button != null: settings_button.pressed.connect(
