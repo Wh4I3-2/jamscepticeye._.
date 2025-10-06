@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccs66k2weljxs"]
+[gd_scene load_steps=11 format=3 uid="uid://ccs66k2weljxs"]
 
 [ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="1_5weqt"]
 [ext_resource type="Script" uid="uid://c5hsd886658j6" path="res://scripts/utils/delete_on_web.gd" id="1_dxijm"]
 [ext_resource type="Script" uid="uid://di5cpstaaguyj" path="res://scenes/screens/main_menu.gd" id="1_kacuo"]
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="1_tgk1t"]
 [ext_resource type="Script" uid="uid://cvaq7niijlju2" path="res://scripts/ui/menu/title_button.gd" id="2_idsrk"]
+[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="6_e21yp"]
 [ext_resource type="Script" uid="uid://b6l62n4qv8s8y" path="res://scripts/ui/rich_text_label.gd" id="6_kr80i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kacuo"]
@@ -18,10 +19,12 @@ border_blend = true
 gradient = SubResource("Gradient_kacuo")
 width = 128
 
-[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("play_button", "settings_button", "credits_button", "exit_button")]
+[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("play_button", "settings_button", "controls_button", "credits_button", "exit_button")]
+process_mode = 3
 script = ExtResource("1_kacuo")
 play_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Play/Play Button")
 settings_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Settings/Settings Button")
+controls_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls/Controls Button")
 credits_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Credits/Credits Button")
 exit_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Exit/Exit Button")
 
@@ -29,22 +32,21 @@ exit_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Exit/Exit 
 script = ExtResource("1_5weqt")
 focus_target = NodePath("../Theme/TitleScreen/HBoxContainer/VBoxContainer/Play/Play Button")
 
-[node name="Theme" type="Control" parent="."]
-layout_mode = 3
+[node name="Theme" type="HBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_tgk1t")
+alignment = 1
 
 [node name="TitleScreen" type="MarginContainer" parent="Theme"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
@@ -90,6 +92,7 @@ theme_type_variation = &"TitleButton"
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 17.0
+focus_mode = 0
 mouse_filter = 2
 theme_type_variation = &"TitleButton"
 button_mask = 0
@@ -99,6 +102,8 @@ alignment = 2
 [node name="Play Button" type="Button" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Play" node_paths=PackedStringArray("pointer", "focus_panel")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_neighbor_top = NodePath("../../Exit/Exit Button")
+focus_previous = NodePath("../../Exit/Exit Button")
 mouse_default_cursor_shape = 2
 theme_type_variation = &"TitleButton"
 text = "Play"
@@ -138,6 +143,7 @@ theme_type_variation = &"TitleButton"
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 17.0
+focus_mode = 0
 mouse_filter = 2
 theme_type_variation = &"TitleButton"
 button_mask = 0
@@ -151,6 +157,56 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_type_variation = &"TitleButton"
 text = "Settings"
+alignment = 0
+script = ExtResource("2_idsrk")
+pointer = NodePath("../Focus/ColorRect")
+focus_panel = NodePath("../Control/Panel")
+
+[node name="Controls" type="HBoxContainer" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls/Control"]
+layout_mode = 0
+offset_right = 115.0
+offset_bottom = 17.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kacuo")
+
+[node name="Focus" type="Control" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="Control" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls/Focus"]
+clip_contents = true
+layout_direction = 3
+anchors_preset = 0
+offset_left = -5.0
+offset_right = 10.0
+offset_bottom = 17.0
+mouse_filter = 2
+theme_type_variation = &"TitleButton"
+
+[node name="ColorRect2" type="Button" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls/Focus/ColorRect"]
+layout_mode = 0
+offset_right = 15.0
+offset_bottom = 17.0
+focus_mode = 0
+mouse_filter = 2
+theme_type_variation = &"TitleButton"
+button_mask = 0
+text = ">"
+alignment = 2
+
+[node name="Controls Button" type="Button" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer/Controls" node_paths=PackedStringArray("pointer", "focus_panel")]
+clip_contents = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"TitleButton"
+text = "Controls"
 alignment = 0
 script = ExtResource("2_idsrk")
 pointer = NodePath("../Focus/ColorRect")
@@ -187,6 +243,7 @@ theme_type_variation = &"TitleButton"
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 17.0
+focus_mode = 0
 mouse_filter = 2
 theme_type_variation = &"TitleButton"
 button_mask = 0
@@ -236,6 +293,7 @@ theme_type_variation = &"TitleButton"
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 17.0
+focus_mode = 0
 mouse_filter = 2
 theme_type_variation = &"TitleButton"
 button_mask = 0
@@ -246,6 +304,8 @@ alignment = 2
 clip_contents = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../../Play/Play Button")
+focus_next = NodePath("../../Play/Play Button")
 mouse_default_cursor_shape = 2
 theme_type_variation = &"TitleButton"
 text = "Exit"
@@ -266,13 +326,28 @@ layout_mode = 2
 size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_kr80i")
 stretch_mode = 4
+script = ExtResource("6_e21yp")
+strength = 0.5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Label" type="RichTextLabel" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2/HBoxContainer"]
-clip_contents = false
+[node name="ParallaxControl" type="Control" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("6_e21yp")
+strength = 2.0
+metadata/_custom_type_script = "uid://r7jm24wa6ovo"
+
+[node name="Label" type="RichTextLabel" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2/HBoxContainer/ParallaxControl"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 theme_type_variation = &"RichSubText"
 bbcode_enabled = true
@@ -280,4 +355,5 @@ text = "[url=https://www.youtube.com/channel/UCYzPXprvl5Y-Sf0g4vX-m6g][wave amp=
 fit_content = true
 horizontal_alignment = 2
 vertical_alignment = 2
+meta_underlined = false
 script = ExtResource("6_kr80i")

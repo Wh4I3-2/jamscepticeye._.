@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://2ygrt8md3rrr"]
+
+[ext_resource type="PackedScene" uid="uid://d0g4v0scxicwg" path="res://scenes/nodes/projectiles/simple.tscn" id="1_2kynx"]
+[ext_resource type="Texture2D" uid="uid://d0q6eh2ho85op" path="res://resources/textures/projectiles/lethal.aseprite" id="2_qpnpb"]
+
+[node name="SimpleLethalProjectile" instance=ExtResource("1_2kynx")]
+is_lethal = true
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_qpnpb")
+
+[node name="HitBox" parent="." index="2"]
+damage = 5
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+debug_color = Color(2.560556e-05, 0.2545329, 0.73538756, 0.41960785)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://beyyf5deqnbtr"]
+[gd_scene load_steps=5 format=3 uid="uid://beyyf5deqnbtr"]
 
 [ext_resource type="Script" uid="uid://by2s2dhox30w2" path="res://scenes/nodes/projectiles/projectile.gd" id="1_rqklt"]
 [ext_resource type="Script" uid="uid://c3wc0k2tam8p1" path="res://scripts/hitbox.gd" id="2_2bq26"]
@@ -6,9 +6,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rpvf2"]
 size = Vector2(8, 8)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2bq26"]
+radius = 3.0
+
 [node name="Projectile" type="CharacterBody2D" node_paths=PackedStringArray("hitbox")]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 4
+motion_mode = 1
 script = ExtResource("1_rqklt")
 hitbox = NodePath("HitBox")
 metadata/_custom_type_script = "uid://by2s2dhox30w2"
@@ -22,5 +26,5 @@ hitbox_owner = NodePath("..")
 metadata/_custom_type_script = "uid://c3wc0k2tam8p1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("RectangleShape2D_rpvf2")
+shape = SubResource("CircleShape2D_2bq26")
 debug_color = Color(0.9999997, 0, 0.10627254, 0.41960785)

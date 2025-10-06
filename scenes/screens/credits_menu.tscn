@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://cav15vgfubpfn"]
+
+[ext_resource type="Script" uid="uid://ciq641828yn0u" path="res://scenes/screens/credits_menu.gd" id="1_jpe1q"]
+[ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="2_ncyqj"]
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_jn64i"]
+[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="4_y6tdm"]
+
+[node name="CreditsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button")]
+process_mode = 3
+script = ExtResource("1_jpe1q")
+back_button = NodePath("Theme/TitleScreen/VBoxContainer/Back")
+
+[node name="InitFocus" type="Node" parent="." node_paths=PackedStringArray("focus_target")]
+script = ExtResource("2_ncyqj")
+focus_target = NodePath("../Theme/TitleScreen/VBoxContainer/Back")
+
+[node name="Theme" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_jn64i")
+alignment = 1
+
+[node name="TitleScreen" type="MarginContainer" parent="Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Theme/TitleScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H1Label"
+text = "Credits"
+script = ExtResource("4_y6tdm")
+strength = -0.5
+
+[node name="Back" type="Button" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Back"
+script = ExtResource("4_y6tdm")
+strength = 0.5
+
+[node name="Developers" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Developers"
+script = ExtResource("4_y6tdm")
+strength = -0.5
+
+[node name="Me" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Wh4I3"
+
+[node name="Assets" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Assets"
+script = ExtResource("4_y6tdm")
+strength = -0.5
+
+[node name="SpaceGroteskFont" type="LinkButton" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "OFL | Space Grotesk - Florian Karsten "
+underline = 1
+uri = "https://floriankarsten.github.io/space-grotesk/"
+
+[node name="InputPrompts" type="LinkButton" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "CC0 | Kenney Input Prompts - Kenney"
+underline = 1
+uri = "https://kenney.nl/assets/input-prompts"
+
+[node name="Tools" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Tools"
+script = ExtResource("4_y6tdm")
+strength = -0.5
+
+[node name="Godot4" type="LinkButton" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Game Engine: Godot 4.5"
+underline = 1
+uri = "https://godotengine.org/"
+
+[node name="Aseprite" type="LinkButton" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Pixel Art: Aseprite"
+underline = 1
+uri = "https://www.aseprite.org/"

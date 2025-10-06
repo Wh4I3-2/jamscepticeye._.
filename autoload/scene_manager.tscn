@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cfkou1h0bj72r" path="res://autoload/scene_manager.gd" id="1_r5jaw"]
 
 [node name="SceneManager" type="CanvasLayer" node_paths=PackedStringArray("transition_rect")]
+process_mode = 3
 layer = 10
 script = ExtResource("1_r5jaw")
 transition_rect = NodePath("ColorRect")

@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0g4v0scxicwg"]
+[gd_scene load_steps=4 format=3 uid="uid://d0g4v0scxicwg"]
 
 [ext_resource type="PackedScene" uid="uid://beyyf5deqnbtr" path="res://scenes/nodes/projectiles/projectile.tscn" id="1_oi4p3"]
 [ext_resource type="Script" uid="uid://d3td4uns53w8r" path="res://scenes/nodes/projectiles/simple.gd" id="2_cbnrv"]
+[ext_resource type="Texture2D" uid="uid://tk5vv6u06ur1" path="res://resources/textures/projectiles/normal.aseprite" id="3_vbock"]
 
-[node name="Projectile" instance=ExtResource("1_oi4p3")]
+[node name="SimpleProjectile" instance=ExtResource("1_oi4p3")]
+collision_mask = 0
 script = ExtResource("2_cbnrv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture_filter = 1
+texture = ExtResource("3_vbock")
+
+[node name="HitBox" parent="." index="2"]
+damage = 1

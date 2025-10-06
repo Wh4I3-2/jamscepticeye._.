@@ -1,0 +1,179 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxvr7vtee40oa"]
+
+[ext_resource type="Script" uid="uid://by3kmv6vbanxu" path="res://scenes/screens/settings_menu.gd" id="1_1ubcf"]
+[ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="2_ap0kp"]
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_0ct2w"]
+[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="4_8lle7"]
+
+[node name="SettingsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button", "master_volume", "music_volume", "sfx_volume", "fullscreen", "screen_shake")]
+process_mode = 3
+script = ExtResource("1_1ubcf")
+back_button = NodePath("Theme/TitleScreen/VBoxContainer/Back")
+master_volume = NodePath("Theme/TitleScreen/VBoxContainer/MVBox/MasterVolume")
+music_volume = NodePath("Theme/TitleScreen/VBoxContainer/MusicBox/MusicVolume")
+sfx_volume = NodePath("Theme/TitleScreen/VBoxContainer/SFXBox/SFXVolume")
+fullscreen = NodePath("Theme/TitleScreen/VBoxContainer/FullscreenBox/Fullscreen")
+screen_shake = NodePath("Theme/TitleScreen/VBoxContainer/ScreenShakeBox/ScreenShake")
+
+[node name="InitFocus" type="Node" parent="." node_paths=PackedStringArray("focus_target")]
+script = ExtResource("2_ap0kp")
+focus_target = NodePath("../Theme/TitleScreen/VBoxContainer/Back")
+
+[node name="Theme" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_0ct2w")
+alignment = 1
+
+[node name="TitleScreen" type="MarginContainer" parent="Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Theme/TitleScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H1Label"
+text = "Settings"
+script = ExtResource("4_8lle7")
+strength = -0.5
+
+[node name="Back" type="Button" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Back"
+script = ExtResource("4_8lle7")
+strength = 0.5
+
+[node name="Audio" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Audio"
+script = ExtResource("4_8lle7")
+strength = -0.5
+
+[node name="MVBox" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer/MVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+horizontal_alignment = 2
+
+[node name="MasterVolume" type="HSlider" parent="Theme/TitleScreen/VBoxContainer/MVBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+max_value = 1.0
+step = 0.05
+
+[node name="MusicBox" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer/MusicBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+horizontal_alignment = 2
+
+[node name="MusicVolume" type="HSlider" parent="Theme/TitleScreen/VBoxContainer/MusicBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+max_value = 1.0
+step = 0.05
+
+[node name="SFXBox" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer/SFXBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sound Volume"
+horizontal_alignment = 2
+
+[node name="SFXVolume" type="HSlider" parent="Theme/TitleScreen/VBoxContainer/SFXBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+max_value = 1.0
+step = 0.05
+
+[node name="Graphics" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Graphics"
+script = ExtResource("4_8lle7")
+strength = -0.5
+
+[node name="FullscreenBox" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer/FullscreenBox"]
+layout_mode = 2
+text = "Fullscreen"
+horizontal_alignment = 2
+
+[node name="Fullscreen" type="CheckButton" parent="Theme/TitleScreen/VBoxContainer/FullscreenBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="Accessibillity" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Accessibility"
+script = ExtResource("4_8lle7")
+strength = -0.5
+
+[node name="ScreenShakeBox" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer/ScreenShakeBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Screen Shake"
+horizontal_alignment = 2
+
+[node name="ScreenShake" type="HSlider" parent="Theme/TitleScreen/VBoxContainer/ScreenShakeBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+max_value = 1.0
+step = 0.05

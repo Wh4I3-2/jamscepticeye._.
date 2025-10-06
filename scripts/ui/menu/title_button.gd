@@ -57,6 +57,11 @@ func _ready() -> void:
 	focus = focus_panel.get_theme_stylebox("panel").duplicate()
 	focus_panel.add_theme_stylebox_override("panel", focus)
 
+	if pointer != null:
+		pointer.size.x     = 0.0
+		pointer.position.x = base_x + base_width
+
+
 func _process(delta: float) -> void:
 	var margin: float = 0.0
 	var slant:  float = 0.0

@@ -5,7 +5,7 @@ signal hit(hurtbox: HurtBox)
 
 @export var hitbox_owner: Node
 
-@export var damage: float
+@export var damage: int
 
 func _ready() -> void:
     area_entered.connect(on_area_entered)

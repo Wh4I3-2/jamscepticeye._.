@@ -1,6 +1,40 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://wh5irbnqd2fb"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://wh5irbnqd2fb"]
 
 [ext_resource type="FontFile" uid="uid://c4mma6tv6123m" path="res://resources/fonts/space_grotesk/SpaceGrotesk-VariableFont_wght.ttf" id="1_wnm0q"]
+
+[sub_resource type="FontVariation" id="FontVariation_wnm0q"]
+base_font = ExtResource("1_wnm0q")
+variation_opentype = {
+2003265652: 500
+}
+variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_5mavb"]
+offsets = PackedFloat32Array(0.6345382, 0.7991968, 0.8875502, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wnm0q"]
+gradient = SubResource("Gradient_5mavb")
+width = 12
+height = 12
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu6mo"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq7pu"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jyfp"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontVariation" id="FontVariation_5mavb"]
 base_font = ExtResource("1_wnm0q")
@@ -25,6 +59,27 @@ content_margin_bottom = 2.0
 bg_color = Color(1, 1, 1, 0)
 
 [resource]
+Button/font_sizes/font_size = 10
+Button/fonts/font = SubResource("FontVariation_wnm0q")
+H1Label/base_type = &"Label"
+H1Label/constants/outline_size = 5
+H1Label/font_sizes/font_size = 16
+H2Label/base_type = &"Label"
+H2Label/constants/outline_size = 4
+H2Label/font_sizes/font_size = 12
+HSlider/icons/grabber = SubResource("GradientTexture2D_wnm0q")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_cu6mo")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_aq7pu")
+HSlider/styles/slider = SubResource("StyleBoxFlat_0jyfp")
+Label/constants/outline_size = 3
+Label/font_sizes/font_size = 9
+Label/fonts/font = SubResource("FontVariation_wnm0q")
+LinkButton/colors/font_color = Color(0.76, 0.76, 0.95, 1)
+LinkButton/colors/font_focus_color = Color(0.37999997, 0.37999997, 0.95, 1)
+LinkButton/colors/font_hover_color = Color(0.4655, 0.4655, 0.95, 1)
+LinkButton/constants/outline_size = 3
+LinkButton/font_sizes/font_size = 9
+LinkButton/fonts/font = SubResource("FontVariation_wnm0q")
 RichSubText/base_type = &"RichTextLabel"
 RichSubText/colors/default_color = Color(1, 1, 1, 0.23921569)
 RichSubText/font_sizes/normal_font_size = 7

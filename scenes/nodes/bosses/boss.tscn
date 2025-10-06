@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://7d1vr4vfs6s"]
+
+[ext_resource type="Script" uid="uid://bmdlfxk22g3e0" path="res://scenes/nodes/bosses/boss.gd" id="1_acvyj"]
+
+[node name="Boss" type="Node2D" node_paths=PackedStringArray("hurtboxes")]
+script = ExtResource("1_acvyj")
+hurtboxes = [NodePath("")]

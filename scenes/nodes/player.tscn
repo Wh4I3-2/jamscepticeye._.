@@ -1,26 +1,148 @@
-[gd_scene load_steps=4 format=3 uid="uid://prjkae0ddd68"]
+[gd_scene load_steps=13 format=3 uid="uid://prjkae0ddd68"]
 
 [ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
+[ext_resource type="Texture2D" uid="uid://vx6v4sa1tr2g" path="res://resources/textures/player.aseprite" id="2_1tkno"]
 [ext_resource type="Script" uid="uid://dp8xqehngnd2v" path="res://scripts/hurtbox.gd" id="2_qmni6"]
+[ext_resource type="Script" uid="uid://cuucqxvhvrdqe" path="res://scripts/projectile_adopter.gd" id="3_1tkno"]
+[ext_resource type="SpriteFrames" uid="uid://dsjhgx8f2x0cp" path="res://resources/textures/ability.aseprite" id="3_p4ts4"]
+[ext_resource type="Script" uid="uid://b3kydfwjwxjcu" path="res://scenes/nodes/tutorial.gd" id="5_ape5s"]
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="5_j0bil"]
+[ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="6_ape5s"]
+[ext_resource type="Texture2D" uid="uid://c6wivuwulqmw6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_arrow_left_outline.png" id="7_p4ts4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
 size = Vector2(8, 8)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qmni6"]
+radius = 2.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ape5s"]
+viewport_path = NodePath("Tutorial/Theme/TitleScreen/SubViewport")
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tutorial", "ability_animation", "hurtbox", "projectile_adopter", "retribution_collision")]
+texture_filter = 1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_d5i2w")
+tutorial = NodePath("Tutorial")
+ability_animation = NodePath("AbilityAnimation")
 hurtbox = NodePath("HurtBox")
+projectile_adopter = NodePath("ProjectileAdopter")
+retribution_collision = NodePath("ProjectileAdopter/CollisionShape2D2")
 diagonal_strength = 0.1
+retribution_radius = 48.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1tkno")
+
+[node name="AbilityAnimation" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3_p4ts4")
+animation = &"None"
+frame_progress = 0.6429033
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kri6c")
 
+[node name="ProjectileAdopter" type="Area2D" parent="." node_paths=PackedStringArray("projectile_owner")]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_1tkno")
+projectile_owner = NodePath("..")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ProjectileAdopter"]
+shape = SubResource("CircleShape2D_qmni6")
+debug_color = Color(0.2392, 0.92, 0.76114666, 0.08627451)
+
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("hurtbox_owner")]
 script = ExtResource("2_qmni6")
 hurtbox_owner = NodePath("..")
+immunity_time = 0.2
 metadata/_custom_type_script = "uid://dp8xqehngnd2v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("RectangleShape2D_kri6c")
 debug_color = Color(0.8882779, 0.33110818, 1.92523e-07, 0.41960785)
+
+[node name="Tutorial" type="CanvasLayer" parent="." node_paths=PackedStringArray("prompt_texture", "prompt", "text")]
+layer = 2
+script = ExtResource("5_ape5s")
+prompt_texture = NodePath("Theme/TitleScreen/SubViewport/TextureRect2")
+prompt = NodePath("Theme/TitleScreen/VBoxContainer/Control")
+text = NodePath("Theme/TitleScreen/VBoxContainer/Label")
+
+[node name="Theme" type="HBoxContainer" parent="Tutorial"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("5_j0bil")
+alignment = 1
+
+[node name="TitleScreen" type="MarginContainer" parent="Tutorial/Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="SubViewport" type="SubViewport" parent="Tutorial/Theme/TitleScreen"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(64, 64)
+render_target_clear_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Tutorial/Theme/TitleScreen/SubViewport"]
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("6_ape5s")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Tutorial/Theme/TitleScreen/SubViewport"]
+modulate = Color(0, 0, 0, 1)
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("7_p4ts4")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/Theme/TitleScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Label" type="RichTextLabel" parent="Tutorial/Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"H1Label"
+bbcode_enabled = true
+text = "[shake rate=20.0 level=5 connected=0]TAKE YOUR REVENGE"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 2
+meta_underlined = false
+hint_underlined = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Control" type="Control" parent="Tutorial/Theme/TitleScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorial/Theme/TitleScreen/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_ape5s")
+expand_mode = 1
+stretch_mode = 5

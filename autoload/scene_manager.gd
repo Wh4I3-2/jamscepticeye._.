@@ -12,6 +12,8 @@ var current: Node
 
 var cached_scenes: Dictionary[String, PackedScene]
 
+var transitioning: bool = false
+
 func _ready() -> void:
 	root = get_tree().current_scene
 
@@ -37,11 +39,15 @@ func change_scene_packed(scene: PackedScene, transition_enter: SceneTransition =
 	_change_scene(scene, transition_enter, transition_exit, swap_delay)
 
 func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transition_exit: SceneTransition, swap_delay: float) -> void:
+	if transitioning: return
+
 	if (!scene.can_instantiate()):
 		print("Failed to instantiate scene at \"%s\"" % scene.resource_path)
 		return
 	
+	get_tree().paused = true
 	scene_change_started.emit()
+	transitioning = true
 	
 	transition_rect.visible = true
 	if transition_enter != null: await show_transition(transition_enter, true)
@@ -49,15 +55,19 @@ func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transi
 	if swap_delay > 0: await get_tree().create_timer(swap_delay).timeout
 
 	_swap_scene.call_deferred(scene.instantiate())
-	
+	get_tree().paused = false
+
 	if transition_exit != null: await show_transition(transition_exit, false)
 	transition_rect.visible = false
-	
+
+	transitioning = false	
 	scene_change_ended.emit(current)
 
 
 func show_transition(transition: SceneTransition, enter: bool = true) -> Signal:
 	var tween: Tween = get_tree().create_tween()
+
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 
 	tween.set_trans(transition.transition_type)
 	tween.set_ease(transition.ease_type)
@@ -93,7 +103,7 @@ func show_transition(transition: SceneTransition, enter: bool = true) -> Signal:
 			final_value = 0.0 if enter else -viewport_size.y
 
 	tween.tween_property(transition_rect, property, final_value, transition.time)
-	
+
 	return tween.finished
 
 func _swap_scene(new_scene: Node) -> void:

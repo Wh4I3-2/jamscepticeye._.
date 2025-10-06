@@ -7,4 +7,8 @@ func _ready() -> void:
 
 func _on_child_entered_tree(child: Node) -> void:
 	if child is CanvasLayer: return
+	if adoptive_parent == null: return
+	if child.get_parent() == null:
+		adoptive_parent.add_Child(child)
+		return
 	child.reparent.call_deferred(adoptive_parent)

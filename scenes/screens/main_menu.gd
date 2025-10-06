@@ -1,7 +1,8 @@
-extends CanvasLayer
+extends Menu
 
 @export var play_button:     Button
 @export var settings_button: Button
+@export var controls_button: Button
 @export var credits_button:  Button
 @export var exit_button:     Button
 
@@ -18,12 +19,32 @@ func _ready() -> void:
 
 	if settings_button != null: settings_button.pressed.connect(
 		func() -> void:
-			pass
+			SceneManager.change_scene(
+				"res://scenes/screens/settings_menu.tscn", 
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_IN),
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_OUT),
+				0.1
+			)
+	)
+
+	if controls_button != null: controls_button.pressed.connect(
+		func() -> void:
+			SceneManager.change_scene(
+				"res://scenes/screens/controls_menu.tscn", 
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_IN),
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_OUT),
+				0.1
+			)
 	)
 
 	if credits_button != null: credits_button.pressed.connect(
 		func() -> void:
-			pass
+			SceneManager.change_scene(
+				"res://scenes/screens/credits_menu.tscn", 
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_IN),
+				SceneTransition.of(0.4 , SceneTransition.Type.LEFT_TO_RIGHT, Tween.TRANS_SINE, Tween.EASE_OUT),
+				0.1
+			)
 	)
 
 	if exit_button != null: exit_button.pressed.connect(

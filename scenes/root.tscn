@@ -1,26 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://w1a7sw1c3m3i"]
+[gd_scene load_steps=2 format=3 uid="uid://w1a7sw1c3m3i"]
 
 [ext_resource type="Script" uid="uid://im80encolh3q" path="res://scenes/root.gd" id="1_j5px3"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_7up8o"]
-viewport_path = NodePath("SubViewport")
-
-[node name="Root" type="Node2D" node_paths=PackedStringArray("adoptive_parent")]
+[node name="Root" type="Node2D"]
 script = ExtResource("1_j5px3")
-adoptive_parent = NodePath("SubViewport")
-
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_7up8o")
-stretch_mode = 5

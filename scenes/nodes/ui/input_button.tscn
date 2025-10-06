@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl3rfueya073l"]
+
+[ext_resource type="Script" uid="uid://bxwnc3e8o3pk2" path="res://scripts/ui/input_prompt.gd" id="1_t0yo8"]
+[ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="2_hxvqk"]
+[ext_resource type="Texture2D" uid="uid://balpxgjxmg4m6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_f8_outline.png" id="2_t0yo8"]
+
+[node name="Left" type="Button"]
+custom_minimum_size = Vector2(32, 24)
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Right")
+focus_neighbor_top = NodePath("../../Back")
+focus_neighbor_right = NodePath("../Right")
+focus_next = NodePath("../Right")
+focus_previous = NodePath("../../Back")
+mouse_default_cursor_shape = 2
+flat = true
+script = ExtResource("1_t0yo8")
+label = "Left"
+action = &"left"
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"H2Label"
+text = "Left"
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BG" type="TextureRect" parent="VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_hxvqk")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Control"]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_t0yo8")
+expand_mode = 1
+stretch_mode = 4

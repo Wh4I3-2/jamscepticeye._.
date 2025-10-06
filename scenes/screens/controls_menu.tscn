@@ -1,0 +1,227 @@
+[gd_scene load_steps=9 format=3 uid="uid://cvhfp2cb3bqsm"]
+
+[ext_resource type="Script" uid="uid://bxnb1wke1srhh" path="res://scenes/screens/controls_menu.gd" id="1_jb5d5"]
+[ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="2_6k7vb"]
+[ext_resource type="Script" uid="uid://cecqgtyachosn" path="res://scripts/ui/input_dialog.gd" id="2_xyqwf"]
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_ubtbd"]
+[ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="4_r8ok2"]
+[ext_resource type="Texture2D" uid="uid://balpxgjxmg4m6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_f8_outline.png" id="5_tbgn7"]
+[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="6_krcyf"]
+[ext_resource type="PackedScene" uid="uid://dl3rfueya073l" path="res://scenes/nodes/ui/input_button.tscn" id="7_krcyf"]
+
+[node name="ControlsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button")]
+process_mode = 3
+script = ExtResource("1_jb5d5")
+back_button = NodePath("Theme/TitleScreen/VBoxContainer/Back")
+
+[node name="InputDialog" type="CanvasLayer" parent="." node_paths=PackedStringArray("layer_to_hide", "action_label", "texture_rect", "focus_holder")]
+visible = false
+script = ExtResource("2_xyqwf")
+layer_to_hide = NodePath("..")
+action_label = NodePath("PanelContainer/TitleScreen/VBoxContainer/ActionLabel")
+texture_rect = NodePath("PanelContainer/TitleScreen/VBoxContainer/Control/TextureRectOutline")
+focus_holder = NodePath("PanelContainer/TitleScreen/FocusHolder")
+
+[node name="PanelContainer" type="PanelContainer" parent="InputDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ubtbd")
+
+[node name="TitleScreen" type="MarginContainer" parent="InputDialog/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InputDialog/PanelContainer/TitleScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="ActionLabel" type="Label" parent="InputDialog/PanelContainer/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H1Label"
+text = "Left"
+
+[node name="Press" type="Label" parent="InputDialog/PanelContainer/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Press any key to continue"
+
+[node name="Control" type="Control" parent="InputDialog/PanelContainer/TitleScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="InputDialog/PanelContainer/TitleScreen/VBoxContainer/Control"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_r8ok2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRectOutline" type="TextureRect" parent="InputDialog/PanelContainer/TitleScreen/VBoxContainer/Control"]
+modulate = Color(0, 0, 0, 1)
+z_index = 1
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_tbgn7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FocusHolder" type="Control" parent="InputDialog/PanelContainer/TitleScreen"]
+layout_mode = 2
+focus_mode = 2
+
+[node name="InitFocus" type="Node" parent="." node_paths=PackedStringArray("focus_target")]
+script = ExtResource("2_6k7vb")
+focus_target = NodePath("../Theme/TitleScreen/VBoxContainer/Back")
+
+[node name="Theme" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_ubtbd")
+alignment = 1
+
+[node name="TitleScreen" type="MarginContainer" parent="Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Theme/TitleScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Label" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H1Label"
+text = "Controls"
+script = ExtResource("6_krcyf")
+strength = -0.5
+
+[node name="Back" type="Button" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Back"
+script = ExtResource("6_krcyf")
+strength = 0.5
+
+[node name="Gameplay" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Gameplay"
+script = ExtResource("6_krcyf")
+strength = -0.5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+
+[node name="Left" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+dialog = NodePath("../../../../../InputDialog")
+
+[node name="Right" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+label = "Right"
+action = &"right"
+dialog = NodePath("../../../../../InputDialog")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+
+[node name="Up" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+label = "Up"
+action = &"up"
+dialog = NodePath("../../../../../InputDialog")
+
+[node name="Down" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+label = "Down"
+action = &"down"
+dialog = NodePath("../../../../../InputDialog")
+
+[node name="Primary" parent="Theme/TitleScreen/VBoxContainer" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("../Back")
+label = "Ability"
+action = &"primary"
+dialog = NodePath("../../../../InputDialog")
+
+[node name="Other" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"H2Label"
+text = "Other"
+script = ExtResource("6_krcyf")
+strength = -0.5
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
+layout_mode = 2
+
+[node name="Pause" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+label = "Pause"
+action = &"pause"
+dialog = NodePath("../../../../../InputDialog")
+
+[node name="Fullscreen" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_next = NodePath("")
+label = "Fullscreen"
+action = &"fullscreen"
+dialog = NodePath("../../../../../InputDialog")
