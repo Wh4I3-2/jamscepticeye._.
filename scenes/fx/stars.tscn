@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://dgdlhsct03213"]
+
+[ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="1_2170m"]
+[ext_resource type="Texture2D" uid="uid://dp5tksg4ekklq" path="res://resources/textures/stars.png" id="2_v572v"]
+[ext_resource type="Texture2D" uid="uid://cqk2705xousp3" path="res://resources/textures/stars_b.png" id="3_yclwp"]
+
+[sub_resource type="Gradient" id="Gradient_yruvw"]
+offsets = PackedFloat32Array(0.22719142, 0.94454384)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vsgdc"]
+noise_type = 5
+frequency = 0.0875
+fractal_type = 2
+domain_warp_enabled = true
+domain_warp_amplitude = 124.9
+domain_warp_frequency = 0.01
+domain_warp_fractal_octaves = 2
+domain_warp_fractal_lacunarity = 4.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vsgdc"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_vsgdc")
+color_ramp = SubResource("Gradient_yruvw")
+seamless = true
+seamless_blend_skirt = 0.5
+
+[sub_resource type="Gradient" id="Gradient_vsgdc"]
+offsets = PackedFloat32Array(0.4490161, 0.980322)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ggwlb"]
+noise_type = 5
+frequency = 0.018
+domain_warp_amplitude = 124.9
+domain_warp_frequency = 0.01
+domain_warp_fractal_octaves = 2
+domain_warp_fractal_lacunarity = 4.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e0wmo"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_ggwlb")
+color_ramp = SubResource("Gradient_vsgdc")
+seamless = true
+seamless_blend_skirt = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kauht"]
+shader = ExtResource("1_2170m")
+shader_parameter/stars_a = ExtResource("2_v572v")
+shader_parameter/stars_b = ExtResource("3_yclwp")
+shader_parameter/noise = SubResource("NoiseTexture2D_vsgdc")
+shader_parameter/noise_noise = SubResource("NoiseTexture2D_e0wmo")
+shader_parameter/noise_noise_strength = 2.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2170m"]
+viewport_path = NodePath("SubViewport")
+
+[node name="CanvasLayer2" type="CanvasLayer"]
+layer = -1
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 180)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
+
+[node name="Vignette" type="ColorRect" parent="SubViewport/CanvasLayer"]
+material = SubResource("ShaderMaterial_kauht")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.48067212, 0.48067206, 0.48067212, 1)
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_2170m")
+stretch_mode = 5

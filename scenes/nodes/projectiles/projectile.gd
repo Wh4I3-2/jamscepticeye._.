@@ -12,5 +12,5 @@ signal destroyed
 @export var is_lethal: bool = false
 
 func destroy() -> void:
-    destroyed.emit()
-    queue_free()
+	destroyed.emit()
+	queue_free()

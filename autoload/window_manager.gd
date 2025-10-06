@@ -2,6 +2,7 @@ extends Node
 
 var fullscreen: bool = false: 
     set(new):
+        if new == fullscreen: return
         fullscreen = new
         DisplayServer.window_set_mode(
             DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if fullscreen else
@@ -10,4 +11,4 @@ var fullscreen: bool = false:
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("fullscreen"):
-        fullscreen = !fullscreen
+        SettingsManager.settings.fullscreen = !SettingsManager.settings.fullscreen

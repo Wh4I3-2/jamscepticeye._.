@@ -10,6 +10,8 @@ func _ready() -> void:
 	_speed = start_speed
 
 func _physics_process(delta: float) -> void:
+	if GameManager.player == null: return
+	if GameManager.player.retribution_window_timer == null: return
 	if !GameManager.player.retribution_window_timer.is_stopped(): return
 	
 	_speed = move_toward(_speed, speed, delta * acceleration)

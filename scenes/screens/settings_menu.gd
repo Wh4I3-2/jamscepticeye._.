@@ -38,6 +38,8 @@ func _ready() -> void:
 		func(v: float) -> void: SettingsManager.settings.screen_shake = v
 	)
 
+	SettingsManager.settings.changed.connect(init_settings)
+
 func init_settings() -> void:
 	master_volume.value       = SettingsManager.settings.master_vol
 	music_volume.value        = SettingsManager.settings.music_vol

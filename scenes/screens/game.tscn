@@ -1,14 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://c0avjutoffgvt"]
+[gd_scene load_steps=20 format=3 uid="uid://c0avjutoffgvt"]
 
 [ext_resource type="Script" uid="uid://clhauhftgrxej" path="res://scenes/screens/game.gd" id="1_clfej"]
 [ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
 [ext_resource type="Script" uid="uid://s4ng1ejjdou1" path="res://scripts/ui/bossbar.gd" id="3_mu8e5"]
 [ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="3_o78e0"]
 [ext_resource type="Shader" uid="uid://bq8potqdyrdle" path="res://resources/shaders/vignette.gdshader" id="5_ln6eb"]
-[ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="6_0q6jn"]
 [ext_resource type="PackedScene" uid="uid://b4lxhna72clcx" path="res://scenes/nodes/bosses/main_boss.tscn" id="6_4ji0l"]
-[ext_resource type="Texture2D" uid="uid://dp5tksg4ekklq" path="res://resources/textures/stars.png" id="7_kauht"]
-[ext_resource type="Texture2D" uid="uid://cqk2705xousp3" path="res://resources/textures/stars_b.png" id="8_yruvw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6eb"]
 size = Vector2(160, 22)
@@ -57,24 +54,6 @@ shader_parameter/v = 0.67999998480064
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ln6eb"]
 viewport_path = NodePath("CanvasLayer/SubViewport")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_yruvw"]
-frequency = 0.049
-fractal_type = 0
-
-[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_vsgdc"]
-depth = 3
-noise = SubResource("FastNoiseLite_yruvw")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kauht"]
-shader = ExtResource("6_0q6jn")
-shader_parameter/stars_a = ExtResource("7_kauht")
-shader_parameter/stars_b = ExtResource("8_yruvw")
-shader_parameter/noise = SubResource("NoiseTexture3D_vsgdc")
-shader_parameter/noise_depth = 3.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_4ji0l"]
-viewport_path = NodePath("CanvasLayer2/SubViewport")
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("camera")]
 texture_filter = 1
@@ -185,40 +164,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_ln6eb")
-stretch_mode = 5
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer2"]
-transparent_bg = true
-snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer2/SubViewport"]
-
-[node name="Vignette" type="ColorRect" parent="CanvasLayer2/SubViewport/CanvasLayer"]
-material = SubResource("ShaderMaterial_kauht")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 140.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer2"]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 381.0
-offset_top = 195.0
-offset_right = 381.0
-offset_bottom = 195.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_4ji0l")
 stretch_mode = 5
 
 [node name="MainBoss" parent="." node_paths=PackedStringArray("targets") instance=ExtResource("6_4ji0l")]
