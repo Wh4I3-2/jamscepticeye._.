@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://prjkae0ddd68"]
+[gd_scene load_steps=20 format=3 uid="uid://prjkae0ddd68"]
 
 [ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
 [ext_resource type="Texture2D" uid="uid://vx6v4sa1tr2g" path="res://resources/textures/player.aseprite" id="2_1tkno"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="6_ape5s"]
 [ext_resource type="PackedScene" uid="uid://dvgaiyhtia11u" path="res://scenes/nodes/projectiles/player_lethal.tscn" id="6_nckpb"]
 [ext_resource type="Texture2D" uid="uid://c6wivuwulqmw6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_arrow_left_outline.png" id="7_p4ts4"]
+[ext_resource type="Texture2D" uid="uid://bbmjl7sq2ubvi" path="res://resources/textures/1x1.png" id="12_nckpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
 size = Vector2(8, 8)
@@ -21,13 +22,31 @@ radius = 2.0
 [sub_resource type="ViewportTexture" id="ViewportTexture_ape5s"]
 viewport_path = NodePath("Tutorial/Theme/TitleScreen/SubViewport")
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tutorial", "ability_animation", "hurtbox", "projectile_adopter", "retribution_collision")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6q45v"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="Curve" id="Curve_o8vkq"]
+_data = [Vector2(0.6501901, 1), 0.0, -0.6405024, 0, 0, Vector2(0.99999994, 0), -7.2450743, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_nckpb"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.35172415, 0.6827586, 0.8344827, 0.8931034, 0.96896553)
+colors = PackedColorArray(1, 1, 1, 1, 0.7746479, 0.7746479, 0.7746479, 1, 0.5140845, 0.5140845, 0.5140845, 1, 0.51, 0.51, 0.51, 0.58431375, 0.51, 0.51, 0.51, 0.38431373, 0.51, 0.51, 0.51, 0)
+
+[sub_resource type="Gradient" id="Gradient_6q45v"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2413793, 0.59310347, 0.92068964)
+colors = PackedColorArray(0.7, 0, 0.035000134, 1, 0.7730884, 0, 0.13188851, 1, 0.83391356, 0.21806389, 0.16387782, 1, 0.99, 0.6237, 0.6237, 0.47058824)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tutorial", "ability_animation", "blood_particles", "hurtbox", "projectile_adopter", "retribution_collision")]
 texture_filter = 1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_d5i2w")
 tutorial = NodePath("Tutorial")
 ability_animation = NodePath("AbilityAnimation")
+blood_particles = NodePath("SubViewport/Node2D/Blood")
 hurtbox = NodePath("HurtBox")
 projectile_adopter = NodePath("ProjectileAdopter")
 retribution_collision = NodePath("ProjectileAdopter/CollisionShape2D2")
@@ -43,6 +62,7 @@ animation = &"None"
 frame_progress = 0.6429033
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_kri6c")
 
 [node name="ProjectileAdopter" type="Area2D" parent="." node_paths=PackedStringArray("projectile_owner")]
@@ -150,3 +170,50 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_ape5s")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_6q45v")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(320, 180)
+
+[node name="Node2D" type="Node2D" parent="SubViewport"]
+position = Vector2(160, 90)
+
+[node name="Blood" type="CPUParticles2D" parent="SubViewport/Node2D"]
+z_index = -1
+amount = 40
+texture = ExtResource("12_nckpb")
+lifetime = 0.84
+lifetime_randomness = 0.19
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector2(-1, -0.2)
+spread = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.55
+initial_velocity_max = 118.47
+angular_velocity_min = 74.87
+angular_velocity_max = 184.1
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_o8vkq")
+color_ramp = SubResource("Gradient_nckpb")
+color_initial_ramp = SubResource("Gradient_6q45v")

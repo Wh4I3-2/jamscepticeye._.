@@ -6,6 +6,8 @@ extends CharacterBody2D
 @export var tutorial: CanvasLayer
 @export var ability_animation: AnimatedSprite2D
 
+@export var blood_particles: CPUParticles2D
+
 @export var hurtbox: HurtBox
 @export var projectile_adopter: ProjectileAdopter
 @export var retribution_collision: CollisionShape2D 
@@ -20,34 +22,46 @@ extends CharacterBody2D
 @export var retribution_cooldown: float = 2.0
 
 @onready var retribution_timer:         Timer = NodeUtils.create_timer(self)
-@onready var retribution_window_timer:   Timer = NodeUtils.create_timer(self)
+@onready var retribution_window_timer:   Timer = NodeUtils.create_timer(self, true)
 @onready var retribution_cooldown_timer: Timer = NodeUtils.create_timer(self)
+@onready var blood_timer: Timer = NodeUtils.create_timer(self)
 
 var awaiting_retribution: bool = false
 var retributing:          bool = false
 
 var has_tutorial: bool = false
+var dead: bool = false
 
 func _ready() -> void:
 	hurtbox.hurt.connect(on_hurt)
+
+	blood_particles.emitting = false
 
 	projectile_adopter.adopted.connect(on_projectile_adopted)
 	retribution_collision.shape = retribution_collision.shape.duplicate()
 
 	if current:
 		GameManager.player = self
+	
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
 	modulate = lerp(Color.WHITE, Color.DARK_GRAY, retribution_cooldown_timer.time_left / retribution_cooldown)
+	blood_particles.emitting = !blood_timer.is_stopped()
 
 func _physics_process(delta: float) -> void:
 	var camera: Camera2D = get_viewport().get_camera_2d()
+	if dead: return
 	if !retribution_window_timer.is_stopped():
 		if !has_tutorial and tutorial != null:
 			retribution_window_timer.start(1.0)
 			if !tutorial.visible: tutorial.visible = true
 
 		camera.zoom = camera.zoom.lerp(Vector2(1.2, 1.2), delta * 4)
+
+		Juice.invert_frames(1.1, true)
+		Juice.screen_shake(10.0, true)
+		blood_timer.start(0.3)
 
 		if Input.is_action_just_pressed("primary"):
 			retribution_window_timer.stop()
@@ -58,9 +72,8 @@ func _physics_process(delta: float) -> void:
 			awaiting_retribution = false
 			retributing = true
 			has_tutorial = true
-
-			Juice.freeze_frames(0.2)
-			Juice.add_screen_shake(20.0)
+			Juice.invert_frames(0.1, true)
+			Juice.screen_shake(10.0)
 
 			if tutorial != null: tutorial.queue_free()
 
@@ -111,10 +124,9 @@ func _physics_process(delta: float) -> void:
 
 func die() -> void:
 	awaiting_retribution = false
+	dead = true
 
-	Juice.add_screen_shake(20.0)
-	Juice.flash_frames(1.2)
-	await Juice.freeze_frames(0.8)
+	await Juice.death_fx()
 
 	SceneManager.change_scene(
 		"res://scenes/screens/death_menu.tscn", 
@@ -149,6 +161,10 @@ func on_hurt(hitbox: HitBox) -> void:
 			
 			return HurtResult.DIED
 	).call()
+
+	blood_particles.global_rotation = global_position.angle_to_point(hitbox.global_position)
+	blood_timer.start(0.3)
+
 	
 	match result:
 		HurtResult.CAN_RETRIBUTE:

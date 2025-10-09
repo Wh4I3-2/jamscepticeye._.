@@ -32,9 +32,9 @@ func _ready() -> void:
 	update()
 
 func init_settigns() -> void:
-	#if ResourceLoader.exists("user://settings.tres"):
-	#	settings = load("user://settings.tres")
-	#	return
+	if ResourceLoader.exists("user://settings.tres"):
+		settings = load("user://settings.tres")
+		return
 	
 	settings = default.duplicate()
 

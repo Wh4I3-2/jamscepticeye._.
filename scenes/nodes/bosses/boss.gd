@@ -46,7 +46,7 @@ func on_hurtbox_hurt(_hurtbox: HurtBox, hitbox: HitBox) -> void:
 		if projectile.projectile_owner == self: return
 	health -= hitbox.damage
 
-	Juice.add_screen_shake(hitbox.damage * 0.5)
+	Juice.screen_shake(hitbox.damage * 0.5)
 	Juice.freeze_frames(0.05)
 	hit_modulater.self_modulate += Color(1000.0, 1000.0, 1000.0)
 

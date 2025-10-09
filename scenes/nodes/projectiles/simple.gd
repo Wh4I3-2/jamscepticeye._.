@@ -10,6 +10,7 @@ func _ready() -> void:
 	_speed = speed
 
 func _physics_process(_delta: float) -> void:
+	if GameManager.player == null: return
 	if !GameManager.player.retribution_window_timer.is_stopped(): return
 	
 	velocity = direction * _speed

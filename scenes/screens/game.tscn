@@ -67,6 +67,7 @@ shape = SubResource("RectangleShape2D_4ji0l")
 [node name="Player" parent="." instance=ExtResource("1_iwlfa")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 z_index = -5

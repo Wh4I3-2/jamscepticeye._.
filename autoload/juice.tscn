@@ -12,7 +12,7 @@ shader_parameter/target_size = Vector2(320, 180)
 [node name="Juice" type="CanvasLayer"]
 layer = 9
 script = ExtResource("1_f0qts")
-flash_material = SubResource("ShaderMaterial_ex4x6")
+fx_shader = SubResource("ShaderMaterial_ex4x6")
 
 [node name="Flash" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_ex4x6")
