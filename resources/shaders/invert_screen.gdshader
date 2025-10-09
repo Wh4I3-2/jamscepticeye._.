@@ -12,7 +12,7 @@ void fragment() {
 	
 	vec2 pixelate_target = mix(target_size, target_size / 4.0, pw);
 	
-	vec2 uv = round(SCREEN_UV * pixelate_target) / pixelate_target;
+	vec2 uv = round(round(SCREEN_UV * pixelate_target) / pixelate_target * target_size) / target_size;
 	uv = mix(SCREEN_UV, uv, ceil(pw));
 	
 	vec4 screen = texture(SCREEN_TEXTURE, uv);

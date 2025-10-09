@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccs66k2weljxs"]
+[gd_scene load_steps=9 format=3 uid="uid://ccs66k2weljxs"]
 
 [ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="1_5weqt"]
 [ext_resource type="Script" uid="uid://c5hsd886658j6" path="res://scripts/utils/delete_on_web.gd" id="1_dxijm"]
@@ -12,12 +12,6 @@
 bg_color = Color(1, 1, 1, 0)
 border_color = Color(1, 1, 1, 0.39215687)
 border_blend = true
-
-[sub_resource type="Gradient" id="Gradient_kacuo"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kr80i"]
-gradient = SubResource("Gradient_kacuo")
-width = 128
 
 [node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("play_button", "settings_button", "controls_button", "credits_button", "exit_button") groups=["ui"]]
 process_mode = 3
@@ -321,10 +315,10 @@ node = NodePath("../..")
 [node name="VBoxContainer2" type="VBoxContainer" parent="Theme/TitleScreen/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2"]
+[node name="TextureRect" type="Label" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-texture = SubResource("GradientTexture2D_kr80i")
-stretch_mode = 4
+theme_type_variation = &"H1Label"
+text = "// TODO: Pick a title"
 script = ExtResource("6_e21yp")
 strength = 0.5
 

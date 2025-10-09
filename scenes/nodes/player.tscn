@@ -197,13 +197,14 @@ position = Vector2(160, 90)
 
 [node name="Blood" type="CPUParticles2D" parent="SubViewport/Node2D"]
 z_index = -1
+rotation = 3.1415927
 amount = 40
 texture = ExtResource("12_nckpb")
 lifetime = 0.84
 lifetime_randomness = 0.19
 emission_shape = 1
 emission_sphere_radius = 2.0
-direction = Vector2(-1, -0.2)
+direction = Vector2(-1, 0)
 spread = 12.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 2.55

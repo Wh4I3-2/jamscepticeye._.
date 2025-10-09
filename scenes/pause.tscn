@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsdhfugfp6hiw"]
+
+[ext_resource type="Script" uid="uid://bmfv86mhg73ca" path="res://scenes/pause.gd" id="1_f1d2v"]
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="2_r8yp4"]
+[ext_resource type="Script" uid="uid://c5hsd886658j6" path="res://scripts/utils/delete_on_web.gd" id="3_m0klm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1d2v"]
+bg_color = Color(0, 0, 0, 0.57254905)
+
+[node name="Pause" type="CanvasLayer" node_paths=PackedStringArray("resume_button", "menu_button", "quit_button")]
+script = ExtResource("1_f1d2v")
+resume_button = NodePath("Panel/MarginContainer/VBoxContainer/Resume")
+menu_button = NodePath("Panel/MarginContainer/VBoxContainer/Menu")
+quit_button = NodePath("Panel/MarginContainer/VBoxContainer/Quit")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_r8yp4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1d2v")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"H1Label"
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Resume" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Menu" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Menu"
+
+[node name="Quit" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Node" type="Node" parent="Panel/MarginContainer/VBoxContainer/Quit" node_paths=PackedStringArray("node")]
+script = ExtResource("3_m0klm")
+node = NodePath("..")

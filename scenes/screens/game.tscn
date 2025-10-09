@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0avjutoffgvt"]
+[gd_scene load_steps=16 format=3 uid="uid://c0avjutoffgvt"]
 
 [ext_resource type="Script" uid="uid://clhauhftgrxej" path="res://scenes/screens/game.gd" id="1_clfej"]
 [ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
 [ext_resource type="Script" uid="uid://s4ng1ejjdou1" path="res://scripts/ui/bossbar.gd" id="3_mu8e5"]
 [ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="3_o78e0"]
+[ext_resource type="PackedScene" uid="uid://bsdhfugfp6hiw" path="res://scenes/pause.tscn" id="6_0q6jn"]
 [ext_resource type="PackedScene" uid="uid://b4lxhna72clcx" path="res://scenes/nodes/bosses/main_boss.tscn" id="6_4ji0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6eb"]
@@ -43,6 +44,12 @@ texture_filter = 1
 script = ExtResource("1_clfej")
 camera = NodePath("Camera2D")
 metadata/_edit_horizontal_guides_ = [166.0]
+
+[node name="Pause" parent="." node_paths=PackedStringArray("pause_nodes") instance=ExtResource("6_0q6jn")]
+process_mode = 3
+layer = 5
+visible = false
+pause_nodes = [NodePath("../Player"), NodePath("..")]
 
 [node name="Bounds" type="StaticBody2D" parent="."]
 collision_layer = 7
