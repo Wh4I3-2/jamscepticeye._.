@@ -10,6 +10,7 @@ signal destroyed
 @export var direction: Vector2
 
 @export var is_lethal: bool = false
+@export var non_adoptable: bool = false
 
 func destroy() -> void:
 	destroyed.emit()

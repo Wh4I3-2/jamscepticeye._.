@@ -4,6 +4,8 @@ extends Node2D
 @export var hurtboxes: Array[HurtBox]
 @export var targets:   Dictionary[Node2D, bool]
 
+@export var hit_modulater: Node2D
+
 @export var max_health: int
 
 @export var current: bool = true
@@ -46,9 +48,9 @@ func on_hurtbox_hurt(_hurtbox: HurtBox, hitbox: HitBox) -> void:
 
 	Juice.add_screen_shake(hitbox.damage * 0.5)
 	Juice.freeze_frames(0.05)
-	modulate += Color(1000.0, 1000.0, 1000.0)
+	hit_modulater.self_modulate += Color(1000.0, 1000.0, 1000.0)
 
 	await Juice.freeze_timer.timeout
 	await get_tree().create_timer(0.05).timeout
 
-	modulate -= Color(1000.0, 1000.0, 1000.0)
+	hit_modulater.self_modulate -= Color(1000.0, 1000.0, 1000.0)

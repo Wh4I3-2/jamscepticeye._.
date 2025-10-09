@@ -49,6 +49,11 @@ func _ready() -> void:
 	if pointer != null:
 		pointer.size.x     = 0.0
 		pointer.position.x = base_x + base_width
+	
+	mouse_entered.connect(
+		func() -> void:
+			grab_focus()
+	)
 
 
 func _process(delta: float) -> void:

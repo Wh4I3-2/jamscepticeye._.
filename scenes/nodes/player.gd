@@ -67,15 +67,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if retribution_window_timer.is_stopped() and awaiting_retribution:
-		awaiting_retribution = false
-
-		SceneManager.change_scene(
-			"res://scenes/screens/death_menu.tscn", 
-			SceneTransition.of(0.2, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
-			SceneTransition.of(1.0, SceneTransition.Type.FADE, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT),
-			0.6
-		)
-
+		die()
 		return
 	
 	if retributing:
@@ -87,6 +79,8 @@ func _physics_process(delta: float) -> void:
 		ability_animation.animation = &"Main"
 		ability_animation.frame = int(ability_animation.sprite_frames.get_frame_count(&"Main") * weight) - 1
 
+		projectile_adopter.monitoring = true
+
 		if retribution_timer.is_stopped():
 			retributing = false
 			
@@ -97,6 +91,8 @@ func _physics_process(delta: float) -> void:
 			
 			return
 		return
+	
+	projectile_adopter.monitoring = false
 	
 	camera.zoom = camera.zoom.lerp(Vector2(1, 1), delta * 8)
 
@@ -112,21 +108,54 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+
+func die() -> void:
+	awaiting_retribution = false
+
+	Juice.add_screen_shake(20.0)
+	Juice.flash_frames(1.2)
+	await Juice.freeze_frames(0.8)
+
+	SceneManager.change_scene(
+		"res://scenes/screens/death_menu.tscn", 
+		SceneTransition.of(0.2, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
+		SceneTransition.of(1.0, SceneTransition.Type.FADE, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT),
+		0.6
+	)
+
+
+enum HurtResult {
+	IGNORED,
+	CAN_RETRIBUTE,
+	DIED,
+}
+
 func on_hurt(hitbox: HitBox) -> void:
 	if retributing: return
-	if hitbox.hitbox_owner is Projectile:
-		var projectile := hitbox.hitbox_owner as Projectile
-		if projectile.projectile_owner == self: return
+	var result: HurtResult = (
+		func() -> HurtResult:
+			if hitbox.hitbox_owner is Projectile:
+				var projectile := hitbox.hitbox_owner as Projectile
+				if projectile.projectile_owner == self: return HurtResult.IGNORED
 
-		awaiting_retribution = true
+				awaiting_retribution = true
 
-		if projectile.is_lethal: return
+				if projectile.is_lethal: return HurtResult.DIED
 
-		if retribution_cooldown_timer.is_stopped():
-			retribution_window_timer.start(retribution_window)
-		return
+				if !retribution_cooldown_timer.is_stopped():
+					return HurtResult.DIED
+				
+				return HurtResult.CAN_RETRIBUTE
+			
+			return HurtResult.DIED
+	).call()
 	
-	awaiting_retribution = true
+	match result:
+		HurtResult.CAN_RETRIBUTE:
+			retribution_window_timer.start(retribution_window)
+		HurtResult.DIED:
+			die()
+
 
 
 func on_projectile_adopted(projectile: Projectile) -> void:

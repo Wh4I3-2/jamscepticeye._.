@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_jn64i"]
 [ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="4_y6tdm"]
 
-[node name="CreditsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button")]
+[node name="CreditsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button") groups=["ui"]]
 process_mode = 3
 script = ExtResource("1_jpe1q")
 back_button = NodePath("Theme/TitleScreen/VBoxContainer/Back")

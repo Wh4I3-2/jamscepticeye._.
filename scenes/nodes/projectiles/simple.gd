@@ -31,5 +31,6 @@ func _physics_process(_delta: float) -> void:
 
 func on_hit(hurtbox: HurtBox) -> void:
 	if hurtbox.hurtbox_owner == projectile_owner: return
+	if !hurtbox.destroy_projectiles: return
 	destroy()
 	

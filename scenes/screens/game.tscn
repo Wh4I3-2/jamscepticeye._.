@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://c0avjutoffgvt"]
+[gd_scene load_steps=15 format=3 uid="uid://c0avjutoffgvt"]
 
 [ext_resource type="Script" uid="uid://clhauhftgrxej" path="res://scenes/screens/game.gd" id="1_clfej"]
 [ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
 [ext_resource type="Script" uid="uid://s4ng1ejjdou1" path="res://scripts/ui/bossbar.gd" id="3_mu8e5"]
 [ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="3_o78e0"]
-[ext_resource type="Shader" uid="uid://bq8potqdyrdle" path="res://resources/shaders/vignette.gdshader" id="5_ln6eb"]
 [ext_resource type="PackedScene" uid="uid://b4lxhna72clcx" path="res://scenes/nodes/bosses/main_boss.tscn" id="6_4ji0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6eb"]
@@ -12,22 +11,6 @@ size = Vector2(160, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ji0l"]
 size = Vector2(26, 204)
-
-[sub_resource type="Gradient" id="Gradient_ln6eb"]
-offsets = PackedFloat32Array(0.4199134, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ln6eb"]
-frequency = 0.004
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ln6eb"]
-noise = SubResource("FastNoiseLite_ln6eb")
-color_ramp = SubResource("Gradient_ln6eb")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ji0l"]
-shader = ExtResource("5_ln6eb")
-shader_parameter/noise_a = SubResource("NoiseTexture2D_ln6eb")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ln6eb"]
 shader = ExtResource("3_o78e0")
@@ -82,12 +65,11 @@ position = Vector2(93, 0)
 shape = SubResource("RectangleShape2D_4ji0l")
 
 [node name="Player" parent="." instance=ExtResource("1_iwlfa")]
-position = Vector2(-57, 55)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-z_index = -19
+z_index = -5
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -101,7 +83,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.13725491)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." groups=["ui"]]
+layer = 6
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer"]
 transparent_bg = true
@@ -110,15 +93,6 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(320, 180)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/SubViewport"]
-
-[node name="Vignette" type="ColorRect" parent="CanvasLayer/SubViewport/CanvasLayer"]
-material = SubResource("ShaderMaterial_4ji0l")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.14, 0.0266, 0.07196001, 0.21960784)
 
 [node name="BossbarLeft" type="VSlider" parent="CanvasLayer/SubViewport/CanvasLayer"]
 material = SubResource("ShaderMaterial_ln6eb")

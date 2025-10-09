@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbyqg50idfgaq"]
+
+[ext_resource type="Script" uid="uid://cj51vdae3ek6h" path="res://autoload/juice.gd" id="1_f0qts"]
+[ext_resource type="Shader" uid="uid://73k2frwo68wf" path="res://resources/shaders/invert_screen.gdshader" id="2_g6bsy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex4x6"]
+shader = ExtResource("2_g6bsy")
+shader_parameter/pixelate_weight = 0.0
+shader_parameter/invert_weight = 0.0
+shader_parameter/target_size = Vector2(320, 180)
+
+[node name="Juice" type="CanvasLayer"]
+layer = 9
+script = ExtResource("1_f0qts")
+flash_material = SubResource("ShaderMaterial_ex4x6")
+
+[node name="Flash" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ex4x6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

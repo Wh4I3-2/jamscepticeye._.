@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://c7fcgfv62jhml"]
+
+[ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="1_6rjj5"]
+[ext_resource type="Script" uid="uid://mfotfpyt8i8b" path="res://scenes/compile_shaders.gd" id="1_7lbl8"]
+[ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="1_e0dok"]
+[ext_resource type="Shader" uid="uid://bq8potqdyrdle" path="res://resources/shaders/vignette.gdshader" id="2_0ubau"]
+[ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="2_ldw06"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7lbl8"]
+shader = ExtResource("1_e0dok")
+shader_parameter/dir = 1.0
+shader_parameter/v = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ubau"]
+shader = ExtResource("2_ldw06")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ldw06"]
+shader = ExtResource("2_0ubau")
+
+[node name="CompileShaders" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_7lbl8")
+
+[node name="Shaders" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Bossbar" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_7lbl8")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Stars" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_0ubau")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Vignette" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_ldw06")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_6rjj5")
+theme_override_font_sizes/font_size = 7
+text = "Compiling shaders..."
+vertical_alignment = 2

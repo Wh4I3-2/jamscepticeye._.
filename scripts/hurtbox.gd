@@ -5,6 +5,7 @@ signal hurt(hitbox: HitBox)
 
 @export var hurtbox_owner: Node
 @export var immunity_time: float = 0.1
+@export var destroy_projectiles: bool = true
 
 @onready var immunity_timer: Timer = NodeUtils.create_timer(self)
 

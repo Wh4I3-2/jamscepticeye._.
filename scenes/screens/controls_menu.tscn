@@ -22,7 +22,7 @@ action_label = NodePath("PanelContainer/TitleScreen/VBoxContainer/ActionLabel")
 texture_rect = NodePath("PanelContainer/TitleScreen/VBoxContainer/Control/TextureRectOutline")
 focus_holder = NodePath("PanelContainer/TitleScreen/FocusHolder")
 
-[node name="PanelContainer" type="PanelContainer" parent="InputDialog"]
+[node name="PanelContainer" type="PanelContainer" parent="InputDialog" groups=["ui"]]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -95,7 +95,7 @@ focus_mode = 2
 script = ExtResource("2_6k7vb")
 focus_target = NodePath("../Theme/TitleScreen/VBoxContainer/Back")
 
-[node name="Theme" type="HBoxContainer" parent="."]
+[node name="Theme" type="HBoxContainer" parent="." groups=["ui"]]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

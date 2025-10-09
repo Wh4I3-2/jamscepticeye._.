@@ -19,7 +19,7 @@ border_blend = true
 gradient = SubResource("Gradient_kacuo")
 width = 128
 
-[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("play_button", "settings_button", "controls_button", "credits_button", "exit_button")]
+[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("play_button", "settings_button", "controls_button", "credits_button", "exit_button") groups=["ui"]]
 process_mode = 3
 script = ExtResource("1_kacuo")
 play_button = NodePath("Theme/TitleScreen/HBoxContainer/VBoxContainer/Play/Play Button")
@@ -323,7 +323,6 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_kr80i")
 stretch_mode = 4
 script = ExtResource("6_e21yp")
@@ -351,7 +350,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_type_variation = &"RichSubText"
 bbcode_enabled = true
-text = "[url=https://www.youtube.com/channel/UCYzPXprvl5Y-Sf0g4vX-m6g][wave amp=20 freq=4 connecte=0]subscribe to jackscepticeye :3"
+text = "[url=https://www.youtube.com/watch?v=qQzdAsjWGPg][wave amp=20 freq=4 connecte=0]Listen to Frank Sinatra"
 fit_content = true
 horizontal_alignment = 2
 vertical_alignment = 2

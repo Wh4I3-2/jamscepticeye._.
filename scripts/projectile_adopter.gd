@@ -4,7 +4,8 @@ extends Area2D
 signal adopted(projectile: Projectile)
 
 @export var projectile_owner: Node
-@export var new_scene: PackedScene
+@export var projectile_scene: PackedScene
+@export var lethal_projectile_scene: PackedScene
 
 func _ready() -> void:
 	body_entered.connect(on_body_entered)
@@ -13,15 +14,21 @@ func on_body_entered(body: CollisionObject2D) -> void:
 	if not body is Projectile: return
 	var projectile := body as Projectile
 
-	if new_scene == null:
-		adopt(projectile)
-		return
-	
-	if !new_scene.can_instantiate():
+	if projectile.non_adoptable: return
+
+	var scene: PackedScene = projectile_scene
+	if projectile.is_lethal:
+		scene = lethal_projectile_scene
+
+	if scene == null:
 		adopt(projectile)
 		return
 
-	var new: Node = new_scene.instantiate()
+	if !scene.can_instantiate():
+		adopt(projectile)
+		return
+
+	var new: Node = scene.instantiate()
 	if not new is Projectile:
 		new.queue_free()
 		adopt(projectile)
@@ -34,7 +41,7 @@ func on_body_entered(body: CollisionObject2D) -> void:
 	projectile.get_parent().add_child.call_deferred(new_projectile)
 	projectile.destroy()
 
-	adopted.emit(new_projectile)
+	adopt(new_projectile)
 
 func adopt(projectile: Projectile) -> void:
 	projectile.projectile_owner = projectile_owner	

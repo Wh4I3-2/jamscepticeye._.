@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://camuir4i03gnb"]
+
+[ext_resource type="PackedScene" uid="uid://xdj3oq0nleeg" path="res://scenes/nodes/projectiles/dash_lethal.tscn" id="1_poqax"]
+[ext_resource type="Texture2D" uid="uid://c70clpgocuefk" path="res://resources/textures/projectiles/non_adoptable.aseprite" id="2_fic52"]
+
+[node name="DashNonAdoptableProjectile" instance=ExtResource("1_poqax")]
+speed = 120.0
+non_adoptable = true
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_fic52")

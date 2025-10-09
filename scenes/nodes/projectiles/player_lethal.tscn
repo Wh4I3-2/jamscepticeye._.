@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvgaiyhtia11u"]
+
+[ext_resource type="PackedScene" uid="uid://bfx1487wsg8dt" path="res://scenes/nodes/projectiles/player.tscn" id="1_lrpdr"]
+[ext_resource type="Texture2D" uid="uid://ck4aaom6empe0" path="res://resources/textures/projectiles/player_lethal.aseprite" id="2_glkxw"]
+
+[node name="PlayerProjectile" instance=ExtResource("1_lrpdr")]
+is_lethal = true
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_glkxw")
+
+[node name="HitBox" parent="." index="2"]
+damage = 5

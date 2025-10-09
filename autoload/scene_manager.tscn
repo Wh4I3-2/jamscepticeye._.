@@ -7,7 +7,7 @@ process_mode = 3
 layer = 10
 script = ExtResource("1_r5jaw")
 transition_rect = NodePath("ColorRect")
-default_scene = "res://scenes/screens/main_menu.tscn"
+default_scene = "res://scenes/compile_shaders.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

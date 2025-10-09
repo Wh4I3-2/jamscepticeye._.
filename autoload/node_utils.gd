@@ -1,10 +1,12 @@
 class_name NodeUtils
 
-static func create_timer(node: Node = null) -> Timer:
+static func create_timer(node: Node = null, ignore_time_scale: bool = false) -> Timer:
 	if node == null:
 		node = SceneManager.current
 	
 	var timer: Timer = Timer.new()
+
+	timer.ignore_time_scale = ignore_time_scale
 
 	timer.one_shot = true
 	timer.autostart = false

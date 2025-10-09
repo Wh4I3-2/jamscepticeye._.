@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://prjkae0ddd68"]
+[gd_scene load_steps=15 format=3 uid="uid://prjkae0ddd68"]
 
 [ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
 [ext_resource type="Texture2D" uid="uid://vx6v4sa1tr2g" path="res://resources/textures/player.aseprite" id="2_1tkno"]
@@ -7,7 +7,9 @@
 [ext_resource type="SpriteFrames" uid="uid://dsjhgx8f2x0cp" path="res://resources/textures/ability.aseprite" id="3_p4ts4"]
 [ext_resource type="Script" uid="uid://b3kydfwjwxjcu" path="res://scenes/nodes/tutorial.gd" id="5_ape5s"]
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="5_j0bil"]
+[ext_resource type="PackedScene" uid="uid://bfx1487wsg8dt" path="res://scenes/nodes/projectiles/player.tscn" id="5_wqvv7"]
 [ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="6_ape5s"]
+[ext_resource type="PackedScene" uid="uid://dvgaiyhtia11u" path="res://scenes/nodes/projectiles/player_lethal.tscn" id="6_nckpb"]
 [ext_resource type="Texture2D" uid="uid://c6wivuwulqmw6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_arrow_left_outline.png" id="7_p4ts4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
@@ -48,6 +50,8 @@ collision_layer = 8
 collision_mask = 8
 script = ExtResource("3_1tkno")
 projectile_owner = NodePath("..")
+projectile_scene = ExtResource("5_wqvv7")
+lethal_projectile_scene = ExtResource("6_nckpb")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="ProjectileAdopter"]
 shape = SubResource("CircleShape2D_qmni6")
@@ -57,6 +61,7 @@ debug_color = Color(0.2392, 0.92, 0.76114666, 0.08627451)
 script = ExtResource("2_qmni6")
 hurtbox_owner = NodePath("..")
 immunity_time = 0.2
+destroy_projectiles = false
 metadata/_custom_type_script = "uid://dp8xqehngnd2v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
@@ -70,7 +75,7 @@ prompt_texture = NodePath("Theme/TitleScreen/SubViewport/TextureRect2")
 prompt = NodePath("Theme/TitleScreen/VBoxContainer/Control")
 text = NodePath("Theme/TitleScreen/VBoxContainer/Label")
 
-[node name="Theme" type="HBoxContainer" parent="Tutorial"]
+[node name="Theme" type="HBoxContainer" parent="Tutorial" groups=["ui"]]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -96,18 +101,17 @@ transparent_bg = true
 handle_input_locally = false
 gui_disable_input = true
 size = Vector2i(64, 64)
-render_target_clear_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="Tutorial/Theme/TitleScreen/SubViewport"]
-offset_right = 32.0
-offset_bottom = 32.0
+offset_right = 64.0
+offset_bottom = 64.0
 texture = ExtResource("6_ape5s")
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="Tutorial/Theme/TitleScreen/SubViewport"]
 modulate = Color(0, 0, 0, 1)
-offset_right = 32.0
-offset_bottom = 32.0
+offset_right = 64.0
+offset_bottom = 64.0
 texture = ExtResource("7_p4ts4")
 stretch_mode = 5
 

@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_0ct2w"]
 [ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="4_8lle7"]
 
-[node name="SettingsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button", "master_volume", "music_volume", "sfx_volume", "fullscreen", "screen_shake")]
+[node name="SettingsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button", "master_volume", "music_volume", "sfx_volume", "fullscreen", "screen_shake") groups=["ui"]]
 process_mode = 3
 script = ExtResource("1_1ubcf")
 back_button = NodePath("Theme/TitleScreen/VBoxContainer/Back")
@@ -147,6 +147,7 @@ text = "Fullscreen"
 horizontal_alignment = 2
 
 [node name="Fullscreen" type="CheckButton" parent="Theme/TitleScreen/VBoxContainer/FullscreenBox"]
+texture_filter = 1
 layout_mode = 2
 mouse_default_cursor_shape = 2
 

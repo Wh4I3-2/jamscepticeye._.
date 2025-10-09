@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b4lxhna72clcx"]
+[gd_scene load_steps=22 format=3 uid="uid://b4lxhna72clcx"]
 
 [ext_resource type="PackedScene" uid="uid://7d1vr4vfs6s" path="res://scenes/nodes/bosses/boss.tscn" id="1_d286x"]
 [ext_resource type="Script" uid="uid://b8wo3y5lysjaa" path="res://scenes/nodes/bosses/main_boss.gd" id="2_8frgb"]
@@ -7,21 +7,23 @@
 [ext_resource type="Texture2D" uid="uid://bbmjl7sq2ubvi" path="res://resources/textures/1x1.png" id="4_7woyw"]
 [ext_resource type="PackedScene" uid="uid://2ygrt8md3rrr" path="res://scenes/nodes/projectiles/simple_lethal.tscn" id="4_uttfg"]
 [ext_resource type="Script" uid="uid://c3wc0k2tam8p1" path="res://scripts/hitbox.gd" id="5_7woyw"]
+[ext_resource type="PackedScene" uid="uid://c02xgi7ju6krw" path="res://scenes/nodes/projectiles/simple_non_adoptable.tscn" id="5_hfasw"]
 [ext_resource type="Curve" uid="uid://bl25ltopcldcm" path="res://resources/curves/sine.tres" id="5_k6csv"]
 [ext_resource type="PackedScene" uid="uid://dudfsp37mwf1u" path="res://scenes/nodes/projectiles/dash.tscn" id="5_tx4fs"]
 [ext_resource type="PackedScene" uid="uid://xdj3oq0nleeg" path="res://scenes/nodes/projectiles/dash_lethal.tscn" id="6_31uum"]
 [ext_resource type="Curve" uid="uid://bjfxlmi8iyiqs" path="res://resources/curves/linear.tres" id="6_ivj0g"]
 [ext_resource type="Curve" uid="uid://dhhmhohq0n32c" path="res://resources/curves/exponential.tres" id="7_tx4fs"]
+[ext_resource type="PackedScene" uid="uid://camuir4i03gnb" path="res://scenes/nodes/projectiles/dash_non_adoptable.tscn" id="8_s4uka"]
 [ext_resource type="SpriteFrames" uid="uid://dlr7spc7evlb8" path="res://resources/textures/boss.aseprite" id="10_tx4fs"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_31uum"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qy8lg"]
-size = Vector2(64, 64)
+[sub_resource type="CircleShape2D" id="CircleShape2D_s4uka"]
+radius = 30.016663
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_31uum"]
-radius = 29.0
+radius = 25.0
 
 [sub_resource type="Curve" id="Curve_31uum"]
 _data = [Vector2(0.6501901, 1), 0.0, -0.6405024, 0, 0, Vector2(0.99999994, 0), -7.2450743, 0.0, 0, 0]
@@ -37,16 +39,19 @@ interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.6371308, 0.907173)
 colors = PackedColorArray(1, 1, 1, 1, 0.32900003, 0.94, 0.83816665, 1, 0.25490198, 0.72156864, 0.69803923, 1)
 
-[node name="MainBoss" node_paths=PackedStringArray("body_animation", "body_copy", "body", "hurtboxes", "targets") instance=ExtResource("1_d286x")]
+[node name="MainBoss" node_paths=PackedStringArray("hitbox", "body_animation", "body_copy", "body", "hurtboxes", "targets", "hit_modulater") instance=ExtResource("1_d286x")]
 texture_filter = 1
 script = ExtResource("2_8frgb")
+hitbox = NodePath("HeadCopy/HitBox")
 body_animation = NodePath("SubViewport/Head/AnimatedSprite2D")
 body_copy = NodePath("HeadCopy")
 projectile_scene = ExtResource("3_gbu8o")
 lethal_projectile_scene = ExtResource("4_uttfg")
+non_adoptable_projectile_scene = ExtResource("5_hfasw")
 body = NodePath("SubViewport/Head")
 dash_projectile_scene = ExtResource("5_tx4fs")
 dash_lethal_projectile_scene = ExtResource("6_31uum")
+dash_non_adoptable_projectile_scene = ExtResource("8_s4uka")
 dash_curve_reposition = ExtResource("5_k6csv")
 dash_curve_windup = ExtResource("6_ivj0g")
 dash_curve_dash = ExtResource("7_tx4fs")
@@ -54,6 +59,7 @@ hurtboxes = [NodePath("HeadCopy/HurtBox")]
 targets = {
 NodePath("HeadCopy/HeadTarget"): true
 }
+hit_modulater = NodePath("SubViewport/Head/AnimatedSprite2D")
 max_health = 200
 
 [node name="TextureRect" type="TextureRect" parent="." index="0"]
@@ -71,6 +77,7 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_31uum")
 
 [node name="HeadCopy" type="Node2D" parent="." index="1"]
+position = Vector2(-323, -9)
 
 [node name="HeadTarget" type="Node2D" parent="HeadCopy" index="0"]
 position = Vector2(14, 0)
@@ -81,7 +88,7 @@ hurtbox_owner = NodePath("../..")
 metadata/_custom_type_script = "uid://dp8xqehngnd2v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HeadCopy/HurtBox" index="0"]
-shape = SubResource("RectangleShape2D_qy8lg")
+shape = SubResource("CircleShape2D_s4uka")
 
 [node name="HitBox" type="Area2D" parent="HeadCopy" index="2" node_paths=PackedStringArray("hitbox_owner")]
 script = ExtResource("5_7woyw")

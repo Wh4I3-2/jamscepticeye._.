@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c02xgi7ju6krw"]
+
+[ext_resource type="PackedScene" uid="uid://2ygrt8md3rrr" path="res://scenes/nodes/projectiles/simple_lethal.tscn" id="1_r5fwe"]
+[ext_resource type="Texture2D" uid="uid://c70clpgocuefk" path="res://resources/textures/projectiles/non_adoptable.aseprite" id="2_3o3ho"]
+
+[node name="SimpleNonAdoptableProjectile" instance=ExtResource("1_r5fwe")]
+non_adoptable = true
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_3o3ho")

@@ -8,7 +8,26 @@ extends CanvasLayer
 	set(new): properties = new; update_properties()
 var property_nodes: Dictionary[StringName, Label]
 
+var ui_visible: bool = true
+
+func _input(event: InputEvent) -> void:
+	if Engine.is_editor_hint(): return
+	if event.is_action_pressed("debug.menu"):
+		visible = !visible
+	if event.is_action_pressed("debug.toggle_ui"):
+		ui_visible = !ui_visible
+		for node in get_tree().get_nodes_in_group("ui"):
+			node.visible = ui_visible
+
+func on_root_child_entered_tree(node: Node) -> void:
+	if node.is_in_group("ui"):
+		node.visible = ui_visible
+
 func _ready() -> void:
+	visible = false
+
+	get_tree().root.child_entered_tree.connect(on_root_child_entered_tree)
+
 	container.visible = true
 	if Engine.is_editor_hint():
 		if self == DebugMenu: container.visible = false

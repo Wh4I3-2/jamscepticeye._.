@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfx1487wsg8dt"]
+
+[ext_resource type="PackedScene" uid="uid://d0g4v0scxicwg" path="res://scenes/nodes/projectiles/simple.tscn" id="1_pbael"]
+[ext_resource type="Texture2D" uid="uid://bgf2q8wt77vjv" path="res://resources/textures/projectiles/player.aseprite" id="2_sd28c"]
+
+[node name="PlayerProjectile" instance=ExtResource("1_pbael")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_sd28c")

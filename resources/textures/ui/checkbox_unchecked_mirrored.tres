@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://7ki82ca7hd2o"]
+
+[ext_resource type="Texture2D" uid="uid://dlgj63ra6q7vx" path="res://resources/textures/ui/checkbox.aseprite" id="1_kmh6c"]
+
+[resource]
+atlas = ExtResource("1_kmh6c")
+region = Rect2(24, 12, 24, 12)
