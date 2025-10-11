@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://prjkae0ddd68"]
+[gd_scene load_steps=19 format=3 uid="uid://prjkae0ddd68"]
 
 [ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
 [ext_resource type="Texture2D" uid="uid://vx6v4sa1tr2g" path="res://resources/textures/player.aseprite" id="2_1tkno"]
@@ -14,16 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://bbmjl7sq2ubvi" path="res://resources/textures/1x1.png" id="12_nckpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
-size = Vector2(8, 8)
+size = Vector2(6, 6)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qmni6"]
 radius = 2.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ape5s"]
 viewport_path = NodePath("Tutorial/Theme/TitleScreen/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_6q45v"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Curve" id="Curve_o8vkq"]
 _data = [Vector2(0.6501901, 1), 0.0, -0.6405024, 0, 0, Vector2(0.99999994, 0), -7.2450743, 0.0, 0, 0]
@@ -46,7 +43,7 @@ collision_mask = 2
 script = ExtResource("1_d5i2w")
 tutorial = NodePath("Tutorial")
 ability_animation = NodePath("AbilityAnimation")
-blood_particles = NodePath("SubViewport/Node2D/Blood")
+blood_particles = NodePath("Node2D/Blood")
 hurtbox = NodePath("HurtBox")
 projectile_adopter = NodePath("ProjectileAdopter")
 retribution_collision = NodePath("ProjectileAdopter/CollisionShape2D2")
@@ -171,31 +168,10 @@ texture = SubResource("ViewportTexture_ape5s")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -90.0
-offset_right = 160.0
-offset_bottom = 90.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_6q45v")
+[node name="Node2D" type="Node2D" parent="."]
+z_index = 1
 
-[node name="SubViewport" type="SubViewport" parent="."]
-disable_3d = true
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="Node2D" type="Node2D" parent="SubViewport"]
-position = Vector2(160, 90)
-
-[node name="Blood" type="CPUParticles2D" parent="SubViewport/Node2D"]
+[node name="Blood" type="CPUParticles2D" parent="Node2D"]
 z_index = -1
 rotation = 3.1415927
 amount = 40

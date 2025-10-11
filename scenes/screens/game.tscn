@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0avjutoffgvt"]
+[gd_scene load_steps=15 format=3 uid="uid://c0avjutoffgvt"]
 
 [ext_resource type="Script" uid="uid://clhauhftgrxej" path="res://scenes/screens/game.gd" id="1_clfej"]
 [ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
@@ -35,9 +35,6 @@ shader_parameter/dir = -1.0
 shader_parameter/v = 0.67999998480064
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o78e0"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_ln6eb"]
-viewport_path = NodePath("CanvasLayer/SubViewport")
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("camera")]
 texture_filter = 1
@@ -94,15 +91,7 @@ color = Color(1, 1, 1, 0.13725491)
 [node name="CanvasLayer" type="CanvasLayer" parent="." groups=["ui"]]
 layer = 6
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer"]
-transparent_bg = true
-snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/SubViewport"]
-
-[node name="BossbarLeft" type="VSlider" parent="CanvasLayer/SubViewport/CanvasLayer"]
+[node name="BossbarLeft" type="VSlider" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_ln6eb")
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -118,7 +107,7 @@ scrollable = false
 script = ExtResource("3_mu8e5")
 shader_material = SubResource("ShaderMaterial_ln6eb")
 
-[node name="BossbarRight" type="VSlider" parent="CanvasLayer/SubViewport/CanvasLayer"]
+[node name="BossbarRight" type="VSlider" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_o78e0")
 anchors_preset = 11
 anchor_left = 1.0
@@ -137,16 +126,6 @@ editable = false
 scrollable = false
 script = ExtResource("3_mu8e5")
 shader_material = SubResource("ShaderMaterial_o78e0")
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_ln6eb")
-stretch_mode = 5
 
 [node name="MainBoss" parent="." node_paths=PackedStringArray("targets") instance=ExtResource("6_4ji0l")]
 targets = {

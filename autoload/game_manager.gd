@@ -1,4 +1,4 @@
 extends Node
 
 var boss: Boss
-var player: Player 
+var player: Player

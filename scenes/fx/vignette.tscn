@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfyn2n5v47207"]
+[gd_scene load_steps=6 format=3 uid="uid://dfyn2n5v47207"]
 
 [ext_resource type="Shader" uid="uid://bq8potqdyrdle" path="res://resources/shaders/vignette.gdshader" id="1_xmede"]
 
@@ -18,39 +18,15 @@ seamless = true
 shader = ExtResource("1_xmede")
 shader_parameter/noise_a = SubResource("NoiseTexture2D_ln6eb")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_evwuq"]
-viewport_path = NodePath("SubViewport")
-
 [node name="Vignette" type="CanvasLayer"]
 layer = 5
 
-[node name="SubViewport" type="SubViewport" parent="."]
-disable_3d = true
-transparent_bg = true
-handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
-
-[node name="Vignette" type="ColorRect" parent="SubViewport/CanvasLayer"]
+[node name="Vignette" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_hsiyq")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.3254902)
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0.48067212, 0.48067206, 0.48067212, 1)
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("ViewportTexture_evwuq")
-stretch_mode = 5
+color = Color(0, 0, 0, 0.3254902)

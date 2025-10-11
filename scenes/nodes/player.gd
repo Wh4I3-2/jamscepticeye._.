@@ -45,19 +45,20 @@ func _ready() -> void:
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
+	Juice.zooms.set(self, 0.0)
+
 func _process(_delta: float) -> void:
 	modulate = lerp(Color.WHITE, Color.DARK_GRAY, retribution_cooldown_timer.time_left / retribution_cooldown)
 	blood_particles.emitting = !blood_timer.is_stopped()
 
 func _physics_process(delta: float) -> void:
-	var camera: Camera2D = get_viewport().get_camera_2d()
 	if dead: return
 	if !retribution_window_timer.is_stopped():
 		if !has_tutorial and tutorial != null:
 			retribution_window_timer.start(1.0)
 			if !tutorial.visible: tutorial.visible = true
 
-		camera.zoom = camera.zoom.lerp(Vector2(1.2, 1.2), delta * 4)
+		Juice.zooms.set(self, lerpf(Juice.zooms.get(self), 0.2, delta * 4))
 
 		Juice.invert_frames(1.1, true)
 		Juice.screen_shake(10.0, true)
@@ -107,7 +108,7 @@ func _physics_process(delta: float) -> void:
 	
 	projectile_adopter.monitoring = false
 	
-	camera.zoom = camera.zoom.lerp(Vector2(1, 1), delta * 8)
+	Juice.zooms.set(self, lerpf(Juice.zooms.get(self), 0.0, delta * 8))
 
 	var horizontal: float = Input.get_axis("left", "right")
 	var vertical:   float = Input.get_axis("up",   "down")

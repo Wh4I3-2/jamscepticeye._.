@@ -6,7 +6,6 @@
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_ubtbd"]
 [ext_resource type="Texture2D" uid="uid://cx15dolsxmxj7" path="res://addons/kenney_input_prompts/Generic/Default/generic_button_square.png" id="4_r8ok2"]
 [ext_resource type="Texture2D" uid="uid://balpxgjxmg4m6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_f8_outline.png" id="5_tbgn7"]
-[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="6_krcyf"]
 [ext_resource type="PackedScene" uid="uid://dl3rfueya073l" path="res://scenes/nodes/ui/input_button.tscn" id="7_krcyf"]
 
 [node name="ControlsMenu" type="CanvasLayer" node_paths=PackedStringArray("back_button")]
@@ -126,14 +125,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"H1Label"
 text = "Controls"
-script = ExtResource("6_krcyf")
 strength = -0.5
 
 [node name="Back" type="Button" parent="Theme/TitleScreen/VBoxContainer"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "Back"
-script = ExtResource("6_krcyf")
 strength = 0.5
 
 [node name="Gameplay" type="Label" parent="Theme/TitleScreen/VBoxContainer"]
@@ -142,7 +139,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"H2Label"
 text = "Gameplay"
-script = ExtResource("6_krcyf")
 strength = -0.5
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
@@ -150,16 +146,22 @@ layout_mode = 2
 
 [node name="Left" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Right")
+focus_neighbor_top = NodePath("../../Back")
+focus_neighbor_right = NodePath("../Right")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/Up")
+focus_next = NodePath("../Right")
+focus_previous = NodePath("../../Back")
 dialog = NodePath("../../../../../InputDialog")
 
 [node name="Right" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Left")
+focus_neighbor_top = NodePath("../../Back")
+focus_neighbor_right = NodePath("../Left")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/Down")
+focus_next = NodePath("../../HBoxContainer3/Up")
+focus_previous = NodePath("../Left")
 label = "Right"
 action = &"right"
 dialog = NodePath("../../../../../InputDialog")
@@ -169,28 +171,31 @@ layout_mode = 2
 
 [node name="Up" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Down")
+focus_neighbor_top = NodePath("../../HBoxContainer2/Left")
+focus_neighbor_right = NodePath("../Down")
+focus_neighbor_bottom = NodePath("../../Primary")
+focus_next = NodePath("../Down")
+focus_previous = NodePath("../../HBoxContainer2/Right")
 label = "Up"
 action = &"up"
 dialog = NodePath("../../../../../InputDialog")
 
 [node name="Down" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Up")
+focus_neighbor_top = NodePath("../../HBoxContainer2/Right")
+focus_neighbor_right = NodePath("../Up")
+focus_neighbor_bottom = NodePath("../../Primary")
+focus_next = NodePath("../../Primary")
+focus_previous = NodePath("../Up")
 label = "Down"
 action = &"down"
 dialog = NodePath("../../../../../InputDialog")
 
 [node name="Primary" parent="Theme/TitleScreen/VBoxContainer" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
 focus_neighbor_top = NodePath("../Back")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
 focus_previous = NodePath("../Back")
 label = "Ability"
 action = &"primary"
@@ -202,7 +207,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"H2Label"
 text = "Other"
-script = ExtResource("6_krcyf")
 strength = -0.5
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Theme/TitleScreen/VBoxContainer"]
@@ -210,18 +214,24 @@ layout_mode = 2
 
 [node name="Pause" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Fullscreen")
+focus_neighbor_top = NodePath("../../Primary")
+focus_neighbor_right = NodePath("../Fullscreen")
+focus_neighbor_bottom = NodePath("../../Back")
+focus_next = NodePath("../Fullscreen")
+focus_previous = NodePath("../../Primary")
 label = "Pause"
 action = &"pause"
 dialog = NodePath("../../../../../InputDialog")
 
 [node name="Fullscreen" parent="Theme/TitleScreen/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("dialog") instance=ExtResource("7_krcyf")]
 layout_mode = 2
-focus_neighbor_left = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_next = NodePath("")
+focus_neighbor_left = NodePath("../Pause")
+focus_neighbor_top = NodePath("../../Primary")
+focus_neighbor_right = NodePath("../Pause")
+focus_neighbor_bottom = NodePath("../../Back")
+focus_next = NodePath("../../Back")
+focus_previous = NodePath("../Pause")
 label = "Fullscreen"
 action = &"fullscreen"
 dialog = NodePath("../../../../../InputDialog")

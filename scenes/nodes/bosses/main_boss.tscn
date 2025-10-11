@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4lxhna72clcx"]
+[gd_scene load_steps=21 format=3 uid="uid://b4lxhna72clcx"]
 
 [ext_resource type="PackedScene" uid="uid://7d1vr4vfs6s" path="res://scenes/nodes/bosses/boss.tscn" id="1_d286x"]
 [ext_resource type="Script" uid="uid://b8wo3y5lysjaa" path="res://scenes/nodes/bosses/main_boss.gd" id="2_8frgb"]
@@ -15,9 +15,6 @@
 [ext_resource type="Curve" uid="uid://dhhmhohq0n32c" path="res://resources/curves/exponential.tres" id="7_tx4fs"]
 [ext_resource type="PackedScene" uid="uid://camuir4i03gnb" path="res://scenes/nodes/projectiles/dash_non_adoptable.tscn" id="8_s4uka"]
 [ext_resource type="SpriteFrames" uid="uid://dlr7spc7evlb8" path="res://resources/textures/boss.aseprite" id="10_tx4fs"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_31uum"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4uka"]
 radius = 30.016663
@@ -43,12 +40,12 @@ colors = PackedColorArray(1, 1, 1, 1, 0.32900003, 0.94, 0.83816665, 1, 0.2549019
 texture_filter = 1
 script = ExtResource("2_8frgb")
 hitbox = NodePath("HeadCopy/HitBox")
-body_animation = NodePath("SubViewport/Head/AnimatedSprite2D")
+body_animation = NodePath("Head/AnimatedSprite2D")
 body_copy = NodePath("HeadCopy")
 projectile_scene = ExtResource("3_gbu8o")
 lethal_projectile_scene = ExtResource("4_uttfg")
 non_adoptable_projectile_scene = ExtResource("5_hfasw")
-body = NodePath("SubViewport/Head")
+body = NodePath("Head")
 dash_projectile_scene = ExtResource("5_tx4fs")
 dash_lethal_projectile_scene = ExtResource("6_31uum")
 dash_non_adoptable_projectile_scene = ExtResource("8_s4uka")
@@ -59,24 +56,10 @@ hurtboxes = [NodePath("HeadCopy/HurtBox")]
 targets = {
 NodePath("HeadCopy/HeadTarget"): true
 }
-hit_modulater = NodePath("SubViewport/Head/AnimatedSprite2D")
+hit_modulater = NodePath("Head/AnimatedSprite2D")
 max_health = 200
 
-[node name="TextureRect" type="TextureRect" parent="." index="0"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -90.0
-offset_right = 160.0
-offset_bottom = 90.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_31uum")
-
-[node name="HeadCopy" type="Node2D" parent="." index="1"]
+[node name="HeadCopy" type="Node2D" parent="." index="0"]
 position = Vector2(-323, -9)
 
 [node name="HeadTarget" type="Node2D" parent="HeadCopy" index="0"]
@@ -99,22 +82,15 @@ metadata/_custom_type_script = "uid://c3wc0k2tam8p1"
 shape = SubResource("CircleShape2D_31uum")
 debug_color = Color(0.98978287, 0, 0.29186603, 0.41960785)
 
-[node name="SubViewport" type="SubViewport" parent="." index="2"]
-disable_3d = true
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="Head" type="Node2D" parent="SubViewport" index="0"]
+[node name="Head" type="Node2D" parent="." index="1"]
 position = Vector2(-144, 0)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewport/Head" index="0"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Head" index="0"]
 z_index = 1
 sprite_frames = ExtResource("10_tx4fs")
 animation = &"Idle"
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Head/AnimatedSprite2D" index="0"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Head/AnimatedSprite2D" index="0"]
 z_index = -1
 position = Vector2(-14, -6)
 amount = 500
@@ -134,5 +110,3 @@ scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_31uum")
 color_ramp = SubResource("Gradient_hfasw")
 color_initial_ramp = SubResource("Gradient_s4uka")
-
-[node name="Camera2D" type="Camera2D" parent="SubViewport" index="1"]

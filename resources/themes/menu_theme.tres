@@ -11,7 +11,6 @@ base_font = ExtResource("1_wnm0q")
 variation_opentype = {
 2003265652: 500
 }
-variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgj3i"]
 
@@ -53,7 +52,6 @@ base_font = ExtResource("1_wnm0q")
 variation_opentype = {
 2003265652: 500
 }
-variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)
 
 [sub_resource type="FontVariation" id="FontVariation_5mavb"]
 base_font = ExtResource("1_wnm0q")
@@ -68,7 +66,6 @@ variation_opentype = {
 2003265652: 700
 }
 variation_embolden = 0.31
-variation_transform = Transform2D(1, 0.05, 0, 1, 0, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnm0q"]
 content_margin_left = 4.0

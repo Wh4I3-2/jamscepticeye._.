@@ -57,6 +57,14 @@ var just_entered_attack: bool
 var behind: bool
 var disable_hitbox: bool
 
+var zoom_speed: float = 1.0
+var zoom: float = 0.0
+
+func _ready() -> void:
+	super._ready()
+
+	Juice.zooms.set(self, 0.0)
+
 func _process(delta: float) -> void:
 	body_copy.position = body.position 
 
@@ -71,9 +79,14 @@ func _process(delta: float) -> void:
 
 	z_index = -10 if behind else 1
 
+	Juice.zooms.set(self, lerpf(Juice.zooms.get(self), zoom, delta * zoom_speed))
+
 func _physics_process(delta: float) -> void:
 	if !GameManager.player.retribution_window_timer.is_stopped(): return
 	
+	zoom = 0.0
+	zoom_speed = 4.0
+
 	just_entered_attack = false
 	if attack_timer.is_stopped():
 		pick_attack()
@@ -221,15 +234,19 @@ var spin_times: int
 var spin_angle: float 
 var spin_time: float
 var spin_offset: float = 0.0
+var spin_enter: bool
 func spin_attack(delta: float) -> void:
+	zoom = -0.1
+	zoom_speed = 1.5
+
 	behind = false
 	if just_entered_attack:
+		spin_enter = true
 		spin_times = 10
 		spin_time = 0.0
 		spin_offset = 0.0
 		if body.position.x > 0: spin_offset = 180.0
-
-	spin_time += delta
+		misc_timer.start(1.0)
 
 	var target_pos: Vector2 = Vector2.from_angle(deg_to_rad(spin_time * 180.0 + spin_offset)) * -150.0
 	var target_rot: float = body.position.angle_to_point(target_pos)
@@ -250,6 +267,13 @@ func spin_attack(delta: float) -> void:
 		return
 	
 	attack_timer.start(4.0)
+
+	if spin_enter:
+		if misc_timer.is_stopped():
+			spin_enter = false
+		return
+
+	spin_time += delta
 
 	if !misc_timer.is_stopped():
 		return

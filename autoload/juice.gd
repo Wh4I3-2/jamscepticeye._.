@@ -10,6 +10,8 @@ var camera: Camera2D
 
 var screen_shake_strength: float = 0.0
 
+var zooms: Dictionary[Node, float]
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -25,6 +27,13 @@ func _process(delta: float) -> void:
 		return
 
 	if camera == null: return
+
+	var zoom: float = 1.0
+	if zooms != null:
+		for node in zooms.keys():
+			zoom += zooms.get(node)
+	
+	camera.zoom = Vector2(zoom, zoom)
 
 	screen_shake_strength = lerpf(screen_shake_strength, 0.0, delta * 2.0)
 

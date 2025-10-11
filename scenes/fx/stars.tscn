@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgdlhsct03213"]
+[gd_scene load_steps=11 format=3 uid="uid://dgdlhsct03213"]
 
 [ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="1_2170m"]
 [ext_resource type="Texture2D" uid="uid://dp5tksg4ekklq" path="res://resources/textures/stars.png" id="2_v572v"]
@@ -51,36 +51,14 @@ shader_parameter/stars_b = ExtResource("3_yclwp")
 shader_parameter/noise = SubResource("NoiseTexture2D_2170m")
 shader_parameter/nebula_noise = SubResource("NoiseTexture2D_v572v")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2170m"]
-viewport_path = NodePath("SubViewport")
-
 [node name="Stars" type="CanvasLayer"]
 layer = -1
 
-[node name="SubViewport" type="SubViewport" parent="."]
-transparent_bg = true
-snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
-size = Vector2i(320, 180)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
-
-[node name="Stars" type="ColorRect" parent="SubViewport/CanvasLayer"]
+[node name="Stars" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_kauht")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0.48067212, 0.48067206, 0.48067212, 1)
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_2170m")
-stretch_mode = 5
+mouse_filter = 2

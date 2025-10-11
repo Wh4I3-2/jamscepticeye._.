@@ -23,6 +23,7 @@ var base_width: float
 var base_x:     float
 
 var height: float
+var margin: float
 
 func _ready() -> void:
 	normal      = get_theme_stylebox("normal").duplicate()
@@ -57,22 +58,23 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var margin: float = 0.0
-
+	var target_margin = 0.0
 	var target_size: float = 0.0
 
 	if is_hovered(): 
-		margin = hover_margin
+		target_margin = hover_margin
 		target_size = base_width
 	if has_focus(): 
-		margin = focus_margin
+		target_margin = focus_margin
 		target_size = base_width
 	
 	focus.border_width_left = floori(lerpf(focus.border_width_left, focus_panel.size.x if has_focus() else 0.0, delta * speed))
 
-	normal.content_margin_left      = lerpf(normal.content_margin_left,      margin + normal_base_margin,  delta * speed)
-	hover.content_margin_left       = lerpf(hover.content_margin_left,       margin + hover_base_margin,   delta * speed)
-	pressed_box.content_margin_left = lerpf(pressed_box.content_margin_left, margin + pressed_base_margin, delta * speed)
+	margin = lerpf(margin, target_margin, delta * speed)
+
+	normal.content_margin_left      = roundf(margin + normal_base_margin)
+	hover.content_margin_left       = roundf(margin + hover_base_margin)
+	pressed_box.content_margin_left = roundf(margin + pressed_base_margin)
 
 	if pointer != null:
 		pointer.size.x     = lerpf(pointer.size.x,     target_size, delta * speed)

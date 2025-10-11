@@ -1,11 +1,7 @@
-@tool
 class_name InputPrompt
 extends Button
 
-@export var label: String : 
-	set(new): 
-		label = new
-		if Engine.is_editor_hint(): label_node.text = label
+@export var label: String
 @export var action: StringName
 @export var dialog: InputDialog 
 
@@ -17,7 +13,6 @@ var key: InputEventKey
 var waiting: bool = false
 
 func _ready() -> void:
-	if Engine.is_editor_hint(): return
 	pressed.connect(on_pressed)
 
 	label_node.text = label

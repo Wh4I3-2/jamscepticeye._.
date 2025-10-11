@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://di5cpstaaguyj" path="res://scenes/screens/main_menu.gd" id="1_kacuo"]
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="1_tgk1t"]
 [ext_resource type="Script" uid="uid://cvaq7niijlju2" path="res://scripts/ui/menu/title_button.gd" id="2_idsrk"]
-[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="6_e21yp"]
 [ext_resource type="Script" uid="uid://b6l62n4qv8s8y" path="res://scripts/ui/rich_text_label.gd" id="6_kr80i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kacuo"]
@@ -319,7 +318,6 @@ layout_mode = 2
 layout_mode = 2
 theme_type_variation = &"H1Label"
 text = "// TODO: Pick a title"
-script = ExtResource("6_e21yp")
 strength = 0.5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2"]
@@ -329,7 +327,6 @@ size_flags_vertical = 3
 [node name="ParallaxControl" type="Control" parent="Theme/TitleScreen/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("6_e21yp")
 strength = 2.0
 metadata/_custom_type_script = "uid://r7jm24wa6ovo"
 

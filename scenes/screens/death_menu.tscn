@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dfxsjgvuumvi" path="res://scenes/screens/death_menu.gd" id="1_n8fl6"]
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="3_cbpx1"]
 [ext_resource type="Script" uid="uid://d0npj7asin5ae" path="res://scripts/ui/init_focus.gd" id="6_habkh"]
-[ext_resource type="Script" uid="uid://r7jm24wa6ovo" path="res://scripts/ui/parallax_control.gd" id="7_4om1l"]
 
 [node name="DeathMenu" type="CanvasLayer" node_paths=PackedStringArray("title", "retry_button", "menu_button") groups=["ui"]]
 process_mode = 3
