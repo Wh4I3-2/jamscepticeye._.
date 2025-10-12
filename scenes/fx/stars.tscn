@@ -50,6 +50,8 @@ shader_parameter/stars_a = ExtResource("2_v572v")
 shader_parameter/stars_b = ExtResource("3_yclwp")
 shader_parameter/noise = SubResource("NoiseTexture2D_2170m")
 shader_parameter/nebula_noise = SubResource("NoiseTexture2D_v572v")
+shader_parameter/uv_stretch = Vector2(0.5625, 1)
+shader_parameter/offset = Vector2(0, 0)
 
 [node name="Stars" type="CanvasLayer"]
 layer = -1

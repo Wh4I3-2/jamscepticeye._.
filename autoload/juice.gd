@@ -6,6 +6,8 @@ extends Node
 @onready var invert_timer:  Timer = NodeUtils.create_timer(self, true)
 @onready var pixelate_timer:  Timer = NodeUtils.create_timer(self, true)
 
+var paused: bool = false
+
 var camera: Camera2D
 
 var screen_shake_strength: float = 0.0
@@ -16,7 +18,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(delta: float) -> void:
-	get_tree().paused = !freeze_timer.is_stopped()
+	get_tree().paused = !freeze_timer.is_stopped() or paused
 	Engine.time_scale = 1.0 if freeze_timer.is_stopped() else 0.0
 
 	fx_shader.set_shader_parameter("pixelate_weight", pixelate_timer.time_left)

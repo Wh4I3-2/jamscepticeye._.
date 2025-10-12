@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="Settings" load_steps=9 format=3 uid="uid://dcvn1k0jt41in"]
+
+[ext_resource type="Script" uid="uid://ccvvhvku48aye" path="res://scripts/resources/settings.gd" id="1_d4bs6"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_fspic"]
+device = -1
+physical_keycode = 4194322
+
+[sub_resource type="InputEventKey" id="InputEventKey_6sxtp"]
+device = -1
+physical_keycode = 70
+unicode = 102
+
+[sub_resource type="InputEventKey" id="InputEventKey_e81k6"]
+device = -1
+physical_keycode = 4194319
+
+[sub_resource type="InputEventKey" id="InputEventKey_0cbje"]
+device = -1
+physical_keycode = 80
+unicode = 112
+
+[sub_resource type="InputEventKey" id="InputEventKey_v7iu4"]
+device = -1
+physical_keycode = 67
+unicode = 99
+
+[sub_resource type="InputEventKey" id="InputEventKey_wakrc"]
+device = -1
+physical_keycode = 4194321
+
+[sub_resource type="InputEventKey" id="InputEventKey_omu8t"]
+device = -1
+physical_keycode = 4194320
+
+[resource]
+script = ExtResource("1_d4bs6")
+controls_left = SubResource("InputEventKey_e81k6")
+controls_right = SubResource("InputEventKey_wakrc")
+controls_up = SubResource("InputEventKey_omu8t")
+controls_down = SubResource("InputEventKey_fspic")
+controls_primary = SubResource("InputEventKey_v7iu4")
+controls_pause = SubResource("InputEventKey_0cbje")
+controls_fullscreen = SubResource("InputEventKey_6sxtp")
+metadata/_custom_type_script = "uid://ccvvhvku48aye"

@@ -3,9 +3,9 @@ extends CanvasLayer
 signal scene_change_started()
 signal scene_change_ended(scene: Node)
 signal scene_swapped(scene: Node)
+signal next_scene_ready
 
 @export var transition_rect: ColorRect
-@export_file_path("*.tscn", "*.scn") var default_scene: String
 
 var root: Node
 var current: Node
@@ -19,21 +19,26 @@ func _ready() -> void:
 
 	transition_rect.visible = false
 
-	change_scene(default_scene)
+	for setup_scene in SettingsManager.static_settings.setup_scenes:
+		change_scene(setup_scene, false)
+		await next_scene_ready
 
-func change_scene(path: String, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null, swap_delay: float = 0.0) -> void:
+	change_scene(SettingsManager.static_settings.default_scene)
+
+
+func change_scene(scene_change: SceneChange, cache: bool = true) -> void:
 	var scene: PackedScene = null
-	if path in cached_scenes.keys():
-		scene = cached_scenes.get(path)
+	if cache and scene_change.path in cached_scenes.keys():
+		scene = cached_scenes.get(scene_change.path)
 	else:
-		scene = load(path)
-		cached_scenes.set(path, scene)
+		scene = load(scene_change.path)
+		cached_scenes.set(scene_change.path, scene)
 	
 	if (scene == null): 
-		print("No scene at \"%s\"" % path)
+		print("No scene at \"%s\"" % scene_change.path)
 		return
 
-	_change_scene(scene, transition_enter, transition_exit, swap_delay)
+	_change_scene(scene, scene_change.transition_enter, scene_change.transition_exit, scene_change.swap_delay)
 
 func change_scene_packed(scene: PackedScene, transition_enter: SceneTransition = null, transition_exit: SceneTransition = null, swap_delay: float = 0.0) -> void:
 	_change_scene(scene, transition_enter, transition_exit, swap_delay)
@@ -50,6 +55,7 @@ func _change_scene(scene: PackedScene, transition_enter: SceneTransition, transi
 	transitioning = true
 	
 	transition_rect.visible = true
+
 	if transition_enter != null: await show_transition(transition_enter, true)
 
 	if swap_delay > 0: await get_tree().create_timer(swap_delay).timeout
@@ -110,6 +116,10 @@ func _swap_scene(new_scene: Node) -> void:
 	if current != null: current.queue_free()
 
 	current = new_scene
-	
-	root.add_child(new_scene)
+
+	root.add_child.call_deferred(new_scene)
 	scene_swapped.emit(new_scene)
+
+	if !new_scene.is_node_ready(): await new_scene.ready
+
+	next_scene_ready.emit()

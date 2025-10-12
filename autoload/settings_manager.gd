@@ -1,6 +1,7 @@
 extends Node
 
-@export var default: Settings
+@export var default_settings: Settings
+@export var static_settings: StaticSettings
 
 var ACTIONS_PROPERTY_MAP: Dictionary[StringName, StringName] = {
 	&"left":       &"controls_left",
@@ -36,7 +37,7 @@ func init_settigns() -> void:
 		settings = load("user://settings.tres")
 		return
 	
-	settings = default.duplicate()
+	settings = default_settings.duplicate()
 
 func save() -> void:
 	ResourceSaver.save(settings, "user://settings.tres")

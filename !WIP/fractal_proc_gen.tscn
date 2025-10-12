@@ -1,0 +1,617 @@
+[gd_scene load_steps=34 format=3 uid="uid://bahkgk8jtue8b"]
+
+[ext_resource type="Script" uid="uid://vfii811mtou3" path="res://!WIP/fractal_proc_gen.gd" id="1_g125e"]
+[ext_resource type="Theme" uid="uid://bkiyhbm3tqcd1" path="res://!WIP/fractal_proc_gen_theme.tres" id="2_ij6oy"]
+[ext_resource type="Script" uid="uid://byira2bb0dop4" path="res://!WIP/frac_proc_gen_camera.gd" id="2_jrvg4"]
+[ext_resource type="PackedScene" uid="uid://dfyn2n5v47207" path="res://scenes/fx/vignette.tscn" id="3_1cmae"]
+[ext_resource type="Texture2D" uid="uid://dp5tksg4ekklq" path="res://resources/textures/stars.png" id="3_krkb5"]
+[ext_resource type="Script" uid="uid://cvagweskcc3lw" path="res://!WIP/apply_full_rect.gd" id="3_lr1yt"]
+[ext_resource type="PackedScene" uid="uid://dgdlhsct03213" path="res://scenes/fx/stars.tscn" id="3_vujjn"]
+[ext_resource type="Script" uid="uid://d0glypn343fpd" path="res://!WIP/fractal_code_edit.gd" id="4_7m6t5"]
+[ext_resource type="Script" uid="uid://cxyfher5mjk1l" path="res://!WIP/disable_input_on_controls.gd" id="4_b5bfi"]
+[ext_resource type="Script" uid="uid://d4j8kyb3bricb" path="res://!WIP/sub_viewport_container_stretch_shrink.gd" id="4_s0vjj"]
+[ext_resource type="Shader" uid="uid://7oqgh1c564vt" path="res://resources/shaders/corner_radius.gdshader" id="4_vjfp5"]
+[ext_resource type="Texture2D" uid="uid://bp02ue3l2sd0m" path="res://resources/textures/ui/icons/maximize.svg" id="9_1pxjm"]
+[ext_resource type="Script" uid="uid://7av0u2tvkkad" path="res://scripts/ui/texture_button_with_panel.gd" id="10_86srv"]
+[ext_resource type="Script" uid="uid://g8i1py5oupju" path="res://addons/shape_texture_2d/shape_texture_2d.gd" id="14_yc5ft"]
+[ext_resource type="Script" uid="uid://bvtmtxudguomm" path="res://addons/shape_texture_2d/drawable_polygon.gd" id="15_352ck"]
+[ext_resource type="Script" uid="uid://dsv4len22kb3s" path="res://!WIP/fractal_logger.gd" id="16_352ck"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_7m6t5"]
+number_color = Color(0.98039216, 0.7019608, 0.5294118, 1)
+symbol_color = Color(0.3882353, 0.8392157, 0.8352941, 1)
+function_color = Color(0.5372549, 0.7058824, 0.98039216, 1)
+member_variable_color = Color(0.8039216, 0.8392157, 0.95686275, 1)
+keyword_colors = {
+"(": Color(0.9019608, 0.54509807, 0.65882355, 1),
+")": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"String": Color(0.9764706, 0.8862745, 0.6862745, 1),
+"[": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"]": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"void": Color(0.7529412, 0.5764706, 0.89411765, 1),
+"{": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"}": Color(0.9019608, 0.54509807, 0.65882355, 1)
+}
+color_regions = {
+"\" \"": Color(0.5803922, 0.81960785, 0.57254905, 1),
+"#": Color(0.56078434, 0.59607846, 0.69803923, 1),
+"' '": Color(0.5803922, 0.81960785, 0.57254905, 1),
+"/* */": Color(0.56078434, 0.59607846, 0.69803923, 1),
+"//": Color(0.56078434, 0.59607846, 0.69803923, 1)
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m6t5"]
+shader = ExtResource("4_vjfp5")
+shader_parameter/top_left = 0.0
+shader_parameter/top_right = 0.0
+shader_parameter/bottom_left = 4.0
+shader_parameter/bottom_right = 4.0
+shader_parameter/texture_scale = 6.0
+
+[sub_resource type="Gradient" id="Gradient_1cmae"]
+offsets = PackedFloat32Array(0.375, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 32
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_krkb5"]
+gradient = SubResource("Gradient_1cmae")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_krkb5"]
+offsets = PackedFloat32Array(0.375, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 32
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lr1yt"]
+gradient = SubResource("Gradient_krkb5")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86srv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vjfp5"]
+bg_color = Color(1, 0.7163333, 0.53999996, 0.08627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m6t5"]
+bg_color = Color(1, 1, 1, 0.13725491)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_86srv"]
+bg_color = Color(0, 0, 0, 0.19607843)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5bfi"]
+bg_color = Color(0.98, 0.7020067, 0.52919996, 0.08627451)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75686276, 0.54901963, 0.42745098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yc5ft"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0.27899998, 0.45, 0.39015, 0.14117648)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5822, 0.82, 0.574, 0.33333334)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_352ck"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0.27899998, 0.45, 0.39015, 0.37254903)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5822, 0.82, 0.574, 0.5686275)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cbl8"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0.27899998, 0.45, 0.39015, 0.21960784)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5822, 0.82, 0.574, 0.43529412)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4apkw"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.7020067, 0.52919996, 0.5019608)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="Resource" id="Resource_yc5ft"]
+script = ExtResource("15_352ck")
+points = 3
+metadata/_custom_type_script = "uid://bvtmtxudguomm"
+
+[sub_resource type="Texture2D" id="Texture2D_yc5ft"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("14_yc5ft")
+size = Vector2i(40, 40)
+shape = SubResource("Resource_yc5ft")
+fill_color = Color(0.27899998, 0.45, 0.39015, 1)
+stroke_width = 3.0
+stroke_color = Color(0.5803922, 0.81960785, 0.57254905, 1)
+offset = Vector2(-4, 0)
+rotation = 90.0
+scale = Vector2(0.8, 0.9)
+metadata/_custom_type_script = "uid://g8i1py5oupju"
+
+[node name="FractalProcGen" type="Node2D" node_paths=PackedStringArray("line_prefab", "viewport", "camera", "fullscreen_button", "viewport_container", "hide_on_fullscreen", "logger_to_make_static", "program_edit", "axiom_edit", "run_button")]
+texture_filter = 5
+script = ExtResource("1_g125e")
+line_prefab = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport/Line2D")
+viewport = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport")
+camera = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport/Camera2D")
+fullscreen_button = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/Buttons/Button")
+viewport_container = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer")
+hide_on_fullscreen = [NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config"), NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log")]
+logger_to_make_static = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Log/MarginContainer/MarginContainer/Logger")
+program_edit = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/MarginContainer/CodeEdit")
+axiom_edit = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer/Axiom")
+run_button = NodePath("CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/RunButton")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." groups=["ui"]]
+process_mode = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+texture_filter = 5
+anchors_preset = -1
+anchor_right = 6.0000005
+anchor_bottom = 6.0000005
+offset_right = -0.00012207031
+offset_bottom = -0.00012207031
+theme = ExtResource("2_ij6oy")
+script = ExtResource("3_lr1yt")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_type_variation = &"ApplicationMargin"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+split_offset = -290
+
+[node name="Config" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config"]
+layout_mode = 2
+size_flags_horizontal = 3
+split_offset = -235
+
+[node name="Values" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Depth: "
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/Values/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BottomLeftPanel" type="TabContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+drag_to_rearrange_enabled = true
+
+[node name="Editor" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer"]
+layout_mode = 2
+
+[node name="DisableInputOnControls" type="Node" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer" node_paths=PackedStringArray("targets")]
+script = ExtResource("4_b5bfi")
+targets = [NodePath("../VBoxContainer/PanelContainer2/MarginContainer/MarginContainer/CodeEdit"), NodePath("../VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer/Axiom")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_type_variation = &"VBoxItem"
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="CodeEdit" type="CodeEdit" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "/* 
+    40 % turn, 20% continue, 20% branch, 20% terminate
+    75 / 2 = 37.5
+*/
+def & <recurse> : \"x\" || \"\";
+
+def x <intermediary> : weighted{
+    \"-x\": 20,
+    \"+x\": 20,
+
+    \"cx\":   20,
+    \"c[x]\": 20,
+
+    \"c\": 10,
+    \"\":  10,
+} || \"\"; 
+
+def c <continue>;
+def - <turn_left>;
+def + <turn_right>;
+def [ <branch_enter>;
+def ] <branch_exit>;"
+placeholder_text = "This is where the fractal program is made"
+emoji_menu_enabled = false
+scroll_smooth = true
+minimap_draw = true
+caret_blink = true
+syntax_highlighter = SubResource("CodeHighlighter_7m6t5")
+highlight_current_line = true
+draw_tabs = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+delimiter_comments = Array[String](["/* */", "//", "#"])
+code_completion_prefixes = Array[String](["v"])
+indent_automatic = true
+indent_automatic_prefixes = Array[String](["{", "[", "("])
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+auto_brace_completion_pairs = {
+"\"": "\"",
+"'": "'",
+"(": ")",
+"/*": "*/",
+"[": "]",
+"{": "}"
+}
+script = ExtResource("4_7m6t5")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"SmallLabel"
+text = "Axiom"
+vertical_alignment = 2
+
+[node name="Axiom" type="LineEdit" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/Config/VSplitContainer/BottomLeftPanel/Editor/MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"LineEditCode"
+text = "c[&x][&x]"
+emoji_menu_enabled = false
+caret_blink = true
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewTabs" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(320, 180)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+current_tab = 0
+drag_to_rearrange_enabled = true
+
+[node name="View" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+metadata/_tab_index = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View" node_paths=PackedStringArray("sub_viewport")]
+material = SubResource("ShaderMaterial_7m6t5")
+custom_minimum_size = Vector2(160, 10)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+stretch = true
+stretch_shrink = 6
+mouse_target = true
+script = ExtResource("4_s0vjj")
+sub_viewport = NodePath("SubViewport")
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer"]
+process_mode = 1
+handle_input_locally = false
+size = Vector2i(206, 82)
+render_target_update_mode = 4
+
+[node name="Stars2" type="Sprite2D" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport"]
+modulate = Color(1, 1, 1, 0.15686275)
+texture = ExtResource("3_krkb5")
+
+[node name="Stars" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport" instance=ExtResource("3_vujjn")]
+
+[node name="Vignette" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport" instance=ExtResource("3_1cmae")]
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport" node_paths=PackedStringArray("drag_control", "stars", "vignette")]
+script = ExtResource("2_jrvg4")
+drag_control = NodePath("../../../Control")
+stars = NodePath("../Stars/Stars")
+vignette = NodePath("../Vignette/Vignette")
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport"]
+
+[node name="Control" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View"]
+modulate = Color(1, 1, 1, 0.46666667)
+layout_mode = 2
+focus_mode = 2
+mouse_default_cursor_shape = 6
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/Control"]
+modulate = Color(1, 1, 1, 0.7176471)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_krkb5")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_lr1yt")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Buttons" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button" type="TextureButton" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/Buttons"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_bottom = 27.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+texture_normal = ExtResource("9_1pxjm")
+texture_pressed = ExtResource("9_1pxjm")
+texture_hover = ExtResource("9_1pxjm")
+texture_disabled = ExtResource("9_1pxjm")
+texture_focused = ExtResource("9_1pxjm")
+stretch_mode = 3
+script = ExtResource("10_86srv")
+normal_box = SubResource("StyleBoxEmpty_86srv")
+pressed_box = SubResource("StyleBoxFlat_vjfp5")
+hover_box = SubResource("StyleBoxFlat_7m6t5")
+disabled_box = SubResource("StyleBoxFlat_86srv")
+focus_box = SubResource("StyleBoxFlat_b5bfi")
+normal_modulate = Color(1, 1, 1, 0.90588236)
+pressed_modulate = Color(0.98039216, 0.7019608, 0.5294118, 1)
+disabled_modulate = Color(1, 1, 1, 0.7294118)
+
+[node name="Log" type="Control" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="Buttons" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RunButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Buttons/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"ButtonBig"
+theme_override_constants/h_separation = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_yc5ft")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_352ck")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8cbl8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4apkw")
+text = " RUN"
+icon = SubResource("Texture2D_yc5ft")
+icon_alignment = 2
+
+[node name="Log" type="PanelContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Log"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Log/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Log/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Logger" type="RichTextLabel" parent="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/Log/MarginContainer/VBoxContainer/Log/MarginContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 2
+theme_type_variation = &"RichTextLabelLogger"
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+script = ExtResource("16_352ck")
+sender_length = 16
+
+[editable path="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport/Stars"]
+[editable path="CanvasLayer/PanelContainer/MarginContainer/HSplitContainer/VSplitContainer/ViewTabs/TabContainer/View/SubViewportContainer/SubViewport/Vignette"]

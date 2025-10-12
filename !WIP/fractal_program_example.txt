@@ -1,0 +1,20 @@
+/* 
+    40 % turn, 20% continue, 20% branch, 20% terminate
+    75 / 2 = 37.5
+*/
+def & <"recurse"> : (1) || "";
+
+def x <"intermediary"> : {
+    "-x": 20,
+    "+x": 20,
+
+    "cx":   20,
+    "c[x]": 20,
+
+    "c": 10,
+    "":  10,
+} || "";
+
+def c <"continue">;
+def - <"turn_left">;
+def + <"turn_right">;

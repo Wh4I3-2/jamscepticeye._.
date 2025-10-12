@@ -1,50 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://wy186xrkac65"]
+[gd_scene load_steps=4 format=3 uid="uid://wy186xrkac65"]
 
 [ext_resource type="Script" uid="uid://cqg32wbb3k8oc" path="res://autoload/settings_manager.gd" id="1_1ykht"]
-[ext_resource type="Script" uid="uid://ccvvhvku48aye" path="res://scripts/resources/settings.gd" id="2_fspic"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_fspic"]
-device = -1
-physical_keycode = 4194322
-
-[sub_resource type="InputEventKey" id="InputEventKey_6sxtp"]
-device = -1
-physical_keycode = 70
-unicode = 102
-
-[sub_resource type="InputEventKey" id="InputEventKey_e81k6"]
-device = -1
-physical_keycode = 4194319
-
-[sub_resource type="InputEventKey" id="InputEventKey_0cbje"]
-device = -1
-physical_keycode = 80
-unicode = 112
-
-[sub_resource type="InputEventKey" id="InputEventKey_v7iu4"]
-device = -1
-physical_keycode = 67
-unicode = 99
-
-[sub_resource type="InputEventKey" id="InputEventKey_wakrc"]
-device = -1
-physical_keycode = 4194321
-
-[sub_resource type="InputEventKey" id="InputEventKey_omu8t"]
-device = -1
-physical_keycode = 4194320
-
-[sub_resource type="Resource" id="Resource_e81k6"]
-script = ExtResource("2_fspic")
-controls_left = SubResource("InputEventKey_e81k6")
-controls_right = SubResource("InputEventKey_wakrc")
-controls_up = SubResource("InputEventKey_omu8t")
-controls_down = SubResource("InputEventKey_fspic")
-controls_primary = SubResource("InputEventKey_v7iu4")
-controls_pause = SubResource("InputEventKey_0cbje")
-controls_fullscreen = SubResource("InputEventKey_6sxtp")
-metadata/_custom_type_script = "uid://ccvvhvku48aye"
+[ext_resource type="Resource" uid="uid://dcvn1k0jt41in" path="res://default_settings.tres" id="2_fspic"]
+[ext_resource type="Resource" uid="uid://3urel7is10vo" path="res://static_settings.tres" id="3_e81k6"]
 
 [node name="SettingsManager" type="Node"]
 script = ExtResource("1_1ykht")
-default = SubResource("Resource_e81k6")
+default_settings = ExtResource("2_fspic")
+static_settings = ExtResource("3_e81k6")

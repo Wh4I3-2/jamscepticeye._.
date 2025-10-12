@@ -12,19 +12,19 @@ func _ready() -> void:
 
 	retry_button.pressed.connect(
 		func() -> void:
-			SceneManager.change_scene(
+			SceneManager.change_scene(SceneChange.of(
 				"res://scenes/screens/game.tscn", 
 				SceneTransition.of(0.8, SceneTransition.Type.FADE, Tween.TRANS_SINE, Tween.EASE_IN_OUT),
 				SceneTransition.of(0.3, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
 				0.5
-			)
+			))
 	)
 	menu_button.pressed.connect(
 		func() -> void:
-			SceneManager.change_scene(
+			SceneManager.change_scene(SceneChange.of(
 				"res://scenes/screens/main_menu.tscn", 
 				SceneTransition.of(0.8, SceneTransition.Type.TOP_TO_BOTTOM, Tween.TRANS_SINE, Tween.EASE_IN_OUT),
 				SceneTransition.of(0.3, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
 				0.5
-			)
+			))
 	)

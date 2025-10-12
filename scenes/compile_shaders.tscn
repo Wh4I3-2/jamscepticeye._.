@@ -1,21 +1,39 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7fcgfv62jhml"]
+[gd_scene load_steps=13 format=3 uid="uid://c7fcgfv62jhml"]
 
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="1_6rjj5"]
 [ext_resource type="Script" uid="uid://mfotfpyt8i8b" path="res://scenes/compile_shaders.gd" id="1_7lbl8"]
 [ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="1_e0dok"]
 [ext_resource type="Shader" uid="uid://bq8potqdyrdle" path="res://resources/shaders/vignette.gdshader" id="2_0ubau"]
 [ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="2_ldw06"]
+[ext_resource type="Shader" uid="uid://73k2frwo68wf" path="res://resources/shaders/invert_screen.gdshader" id="3_6nw38"]
+[ext_resource type="Shader" uid="uid://7oqgh1c564vt" path="res://resources/shaders/corner_radius.gdshader" id="3_maw7i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7lbl8"]
 shader = ExtResource("1_e0dok")
 shader_parameter/dir = 1.0
 shader_parameter/v = 0.5
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nfuj"]
+shader = ExtResource("3_maw7i")
+shader_parameter/top_left = 4.0
+shader_parameter/top_right = 4.0
+shader_parameter/bottom_left = 4.0
+shader_parameter/bottom_right = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_maw7i"]
+shader = ExtResource("3_6nw38")
+shader_parameter/pixelate_weight = 0.0
+shader_parameter/invert_weight = 0.0
+shader_parameter/target_size = Vector2(320, 180)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ubau"]
 shader = ExtResource("2_ldw06")
+shader_parameter/uv_stretch = Vector2(0.5625, 1)
+shader_parameter/offset = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ldw06"]
 shader = ExtResource("2_0ubau")
+shader_parameter/offset = Vector2(0, 0)
 
 [node name="CompileShaders" type="CanvasLayer"]
 layer = 10
@@ -29,6 +47,18 @@ offset_bottom = 40.0
 
 [node name="Bossbar" type="ColorRect" parent="Shaders"]
 material = SubResource("ShaderMaterial_7lbl8")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CornerRadius" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_7nfuj")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InvertScreen" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_maw7i")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

@@ -4,6 +4,8 @@ uniform sampler2D stars_a      : filter_nearest, repeat_enable;
 uniform sampler2D stars_b      : filter_nearest, repeat_enable;
 uniform sampler2D noise        : filter_linear, repeat_enable;
 uniform sampler2D nebula_noise : filter_linear, repeat_enable;
+uniform vec2 uv_stretch = vec2(0.5625, 1.0);
+uniform vec2 offset;
 
 vec3 hsv_to_rgb(vec3 c) {
 	const vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -28,8 +30,10 @@ vec2 angle_to_dir(float r) {
 	return vec2(cos(r), sin(r));
 }
 
-vec3 layer(vec2 uv, float rot, float scale, vec3 hsv_start, vec3 hsv_end, vec2 move) {
+vec3 layer(vec2 uv, float rot, float scale, vec3 hsv_start, vec3 hsv_end, vec2 move, vec2 off) {
 	float t = (TIME + uv.x + uv.y) * 0.01;
+	
+	uv = uv + mix(off, off * scale, 0.1);
 	
 	move = rotated(vec2(0), move, mix(0.0, rot, 0.97));
 	uv = rotated(vec2(0.5), uv, rot);
@@ -46,25 +50,34 @@ vec3 layer(vec2 uv, float rot, float scale, vec3 hsv_start, vec3 hsv_end, vec2 m
 }
 
 void fragment() {
+	vec2 screen_size = 1.0 / SCREEN_PIXEL_SIZE;
+	
+	vec2 off = offset / screen_size;
+	
+	float uvsq_side = max(screen_size.x, screen_size.y);
+	vec2 uvsq_offset = (1.0 - (screen_size/uvsq_side)) / 2.0;
+	vec2 uvsq = (FRAGCOORD.xy) / uvsq_side + uvsq_offset;
+	uvsq = uvsq * uv_stretch;
+	
 	vec3 bg = vec3(0.1, 0.2, 0.22);
 	
 	// This is the noise that warps the stars around
 	vec2 n = vec2(
-		texture(noise, vec2(UV.x, UV.y)).x,
-		texture(noise, vec2(UV.x, UV.y) + vec2(0.4)).x // + vec2(0.4) makes X and Y not be in sync
+		texture(noise, uvsq + off * 0.5).x,
+		texture(noise, uvsq + off * 0.5 + vec2(0.4)).x // + vec2(0.4) makes X and Y not be in sync
 	);
 	
-	vec2 uv = UV + n * 0.1;
+	vec2 uv = uvsq + n * 0.1;
 	
 	// If you want a different look you will mostly be editing these big chunks
 	// Adding uniforms for that is really bulky and annoying, so it's just hard-coded
 	vec3 stars = vec3(0.0);
-	stars += layer(uv,              20.0, 1.4, vec3(0.1, 1.0, 1.0), vec3(0.0, 1.0, 0.5), vec2(3.0, 0.0));
-	stars += layer(uv + vec2(10.0), 40.0, 1.0, vec3(0.4, 0.5, 1.0), vec3(0.3, 0.5, 0.5), vec2(2.0, 0.0));
-	stars += layer(uv + vec2(40.0), 30.0, 0.6, vec3(0.7, 0.5, 1.0), vec3(0.6, 0.5, 0.5), vec2(1.0, 0.0));
-	stars += layer(uv + vec2(30.0), 25.0, 0.4, vec3(1.0, 0.5, 1.0), vec3(0.9, 0.5, 0.5), vec2(0.5, 0.0));
-	stars += layer(uv + vec2(20.0), 25.0, 4.0, vec3(0.8, 0.5, 1.0), vec3(0.7, 0.5, 0.5), vec2(1.0, 0.0));
-	stars += layer(uv + vec2(50.0), 25.0, 4.0, vec3(0.8, 0.5, 1.0), vec3(0.7, 0.5, 0.5), vec2(1.0, 0.0));
+	stars += layer(uv,              20.0, 1.4, vec3(0.1, 1.0, 1.0), vec3(0.0, 1.0, 0.5), vec2(3.0, 0.0), off);
+	stars += layer(uv + vec2(10.0), 40.0, 1.0, vec3(0.4, 0.5, 1.0), vec3(0.3, 0.5, 0.5), vec2(2.0, 0.0), off);
+	stars += layer(uv + vec2(40.0), 30.0, 0.6, vec3(0.7, 0.5, 1.0), vec3(0.6, 0.5, 0.5), vec2(1.0, 0.0), off);
+	stars += layer(uv + vec2(30.0), 25.0, 0.4, vec3(1.0, 0.5, 1.0), vec3(0.9, 0.5, 0.5), vec2(0.5, 0.0), off);
+	stars += layer(uv + vec2(20.0), 25.0, 4.0, vec3(0.8, 0.5, 1.0), vec3(0.7, 0.5, 0.5), vec2(1.0, 0.0), off);
+	stars += layer(uv + vec2(50.0), 25.0, 4.0, vec3(0.8, 0.5, 1.0), vec3(0.7, 0.5, 0.5), vec2(1.0, 0.0), off);
 	
 	// For loops aren't that bad
 	for (int i = 0; i < 10; i++) {
@@ -73,16 +86,18 @@ void fragment() {
 			25.0, 0.3,
 			vec3(0.0, 0.0, 0.2), 
 			vec3(0.0, 0.0, 0.0), 
-			angle_to_dir(radians(float(i) * 12.0)));
-		}
+			angle_to_dir(radians(float(i) * 12.0)),
+			off
+		);
+	}
 	// What you do have to look out for are if statements because they chug the GPU
 	// That doesn't mean you can't have conditional stuff
 	// Just that usually calculating both branches is typically faster
 	
 	vec3 nebulae = vec3(0.0);
-	nebulae += hsv_to_rgb(vec3(0.94, 1.0, 0.3)) * texture(nebula_noise,  uv + vec2(TIME *  0.08)).x;
-	nebulae += hsv_to_rgb(vec3(0.08, 1.0, 0.3)) * texture(nebula_noise, (uv + vec2(TIME * -0.04) + vec2(0.5)) / 2.0).x;
-	nebulae += hsv_to_rgb(vec3(0.51, 1.0, 0.3)) * texture(nebula_noise, (uv + vec2(TIME *  vec2(0.03, 0.01)) + vec2(0.75)) / 1.5).x;
+	nebulae += hsv_to_rgb(vec3(0.94, 1.0, 0.3)) * texture(nebula_noise,  uv + off                      + vec2(TIME *  0.08)).x;
+	nebulae += hsv_to_rgb(vec3(0.08, 1.0, 0.3)) * texture(nebula_noise, (uv + mix(off, off * 2.0, 0.1) + vec2(TIME * -0.04) + vec2(0.5)) / 2.0).x;
+	nebulae += hsv_to_rgb(vec3(0.51, 1.0, 0.3)) * texture(nebula_noise, (uv + mix(off, off * 1.5, 0.1) + vec2(TIME *  vec2(0.03, 0.01)) + vec2(0.75)) / 1.5).x;
 	
 	// Addative mixing
 	COLOR.rgb = bg + stars + nebulae;

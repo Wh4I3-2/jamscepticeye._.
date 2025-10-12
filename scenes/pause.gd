@@ -31,17 +31,19 @@ func _ready() -> void:
 	menu_button.pressed.connect(
 		func() -> void:
 			if !visible: return
-			SceneManager.change_scene(
+			SceneManager.change_scene(SceneChange.of(
 				"res://scenes/screens/main_menu.tscn", 
 				SceneTransition.of(0.4 , SceneTransition.Type.RIGHT_TO_LEFT, Tween.TRANS_SINE, Tween.EASE_IN),
 				SceneTransition.of(0.4 , SceneTransition.Type.RIGHT_TO_LEFT, Tween.TRANS_SINE, Tween.EASE_OUT),
 				0.1
-			)
+			))
 	)
 	if quit_button != null: quit_button.pressed.connect(
 		func() -> void:
 			if !visible: return
-			SceneManager.change_scene("res://scenes/exit.tscn", SceneTransition.of(1.5, SceneTransition.FADE, Tween.TRANS_QUAD, Tween.EASE_IN))
+			SceneManager.change_scene(SceneChange.of(
+				"res://scenes/exit.tscn", SceneTransition.of(1.5, SceneTransition.FADE, Tween.TRANS_QUAD, Tween.EASE_IN)
+			))
 	)
 
 func on_visibility_changed() -> void:

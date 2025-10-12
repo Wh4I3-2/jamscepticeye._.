@@ -129,12 +129,12 @@ func die() -> void:
 
 	await Juice.death_fx()
 
-	SceneManager.change_scene(
+	SceneManager.change_scene(SceneChange.of(
 		"res://scenes/screens/death_menu.tscn", 
 		SceneTransition.of(0.2, SceneTransition.Type.FADE, Tween.TRANS_QUAD, Tween.EASE_IN_OUT),
 		SceneTransition.of(1.0, SceneTransition.Type.FADE, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT),
 		0.6
-	)
+	))
 
 
 enum HurtResult {
