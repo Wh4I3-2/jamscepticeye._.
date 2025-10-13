@@ -15,9 +15,6 @@ static var logger: FractalLogger
 
 @export var logger_to_make_static: FractalLogger
 
-@export var program_edit: TextEdit
-@export var axiom_edit: LineEdit
-
 @export var run_button: BaseButton
 
 @export var length: float = 10.0
@@ -42,11 +39,16 @@ func _ready() -> void:
 
 	run_button.pressed.connect(run)
 
+func current_editor() -> FractalEditor:
+	return null
+
 func run() -> void:
-	if program_edit.text.hash() != program_hash:
-		program_hash = program_edit.text.hash()
-		program = FractalProgram.from(program_edit.text)
-	var result: String = program.run(axiom_edit.text)
+	var editor: FractalEditor = current_editor()
+	if editor == null: return
+	if editor.file.source.hash() != program_hash:
+		program_hash = editor.file.source.hash()
+		program = FractalProgram.from(editor.file.source)
+	var result: String = program.run(editor.file.axiom)
 	logger.info(result, "Fractal")
 
 	generate(result)
@@ -81,7 +83,7 @@ func generate(axiom: String) -> void:
 				branch.global_position = line_prefab.global_position
 				branches.back().add_child(branch)
 				var dir: Vector2 = dirs.get(branches.back())
-				dirs.set(branch, dir.rotated(deg_to_rad(-40.0)))
+				dirs.set(branch, dir.rotated(deg_to_rad(randf_range(-50.0, -30.0) * float(randi() * 2.0 - 1.0))))
 				branch.add_point(branches.back().get_point_position(branches.back().get_point_count() - 1))
 				branches.append(branch)
 				lines.append(branch)
@@ -93,16 +95,16 @@ func generate(axiom: String) -> void:
 				branches.back().add_point(last_point + dirs.get(branches.back()) * length)
 			"turn_left":
 				var dir: Vector2 = dirs.get(branches.back())
-				dir = dir.rotated(deg_to_rad(-30.0))
+				dir = dir.rotated(deg_to_rad(-5.0))
 				dirs.set(branches.back(), dir)
 				var last_point: Vector2 = branches.back().get_point_position(branches.back().get_point_count() - 1)
-				branches.back().add_point(last_point + dir * 0.5 * length)
+				branches.back().add_point(last_point + dir * 0.1 * length)
 			"turn_right":
 				var dir: Vector2 = dirs.get(branches.back())
-				dir = dir.rotated(deg_to_rad(30.0))
+				dir = dir.rotated(deg_to_rad(5.0))
 				dirs.set(branches.back(), dir)
 				var last_point: Vector2 = branches.back().get_point_position(branches.back().get_point_count() - 1)
-				branches.back().add_point(last_point + dir * 0.5 * length)
+				branches.back().add_point(last_point + dir * 0.1 * length)
 
 
 func toggle_fullscreen(toggled: bool) -> void:

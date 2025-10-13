@@ -1,0 +1,187 @@
+[gd_scene load_steps=8 format=3 uid="uid://2h42ure7u3bx"]
+
+[ext_resource type="Script" uid="uid://1lu4h1pc5mx5" path="res://!WIP/fractal_editor.gd" id="1_rbyy8"]
+[ext_resource type="Script" uid="uid://bgtm2bf7c3oin" path="res://!WIP/proc_editor_file.gd" id="2_3mq4t"]
+[ext_resource type="Script" uid="uid://cxyfher5mjk1l" path="res://!WIP/disable_input_on_controls.gd" id="2_vhw4p"]
+[ext_resource type="Script" uid="uid://d0glypn343fpd" path="res://!WIP/fractal_code_edit.gd" id="3_3mq4t"]
+
+[sub_resource type="Resource" id="Resource_5om8h"]
+script = ExtResource("2_3mq4t")
+metadata/_custom_type_script = "uid://bgtm2bf7c3oin"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5iiu"]
+bg_color = Color(0.11764706, 0.11764706, 0.18039216, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_5om8h"]
+number_color = Color(0.98039216, 0.7019608, 0.5294118, 1)
+symbol_color = Color(0.3882353, 0.8392157, 0.8352941, 1)
+function_color = Color(0.5372549, 0.7058824, 0.98039216, 1)
+member_variable_color = Color(0.8039216, 0.8392157, 0.95686275, 1)
+keyword_colors = {
+"(": Color(0.9019608, 0.54509807, 0.65882355, 1),
+")": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"String": Color(0.9764706, 0.8862745, 0.6862745, 1),
+"[": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"]": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"void": Color(0.7529412, 0.5764706, 0.89411765, 1),
+"{": Color(0.9019608, 0.54509807, 0.65882355, 1),
+"}": Color(0.9019608, 0.54509807, 0.65882355, 1)
+}
+color_regions = {
+"\" \"": Color(0.5803922, 0.81960785, 0.57254905, 1),
+"#": Color(0.56078434, 0.59607846, 0.69803923, 1),
+"' '": Color(0.5803922, 0.81960785, 0.57254905, 1),
+"/* */": Color(0.56078434, 0.59607846, 0.69803923, 1),
+"//": Color(0.56078434, 0.59607846, 0.69803923, 1)
+}
+
+[node name="Editor" type="Control" node_paths=PackedStringArray("load_button", "save_button", "save_as_button", "code_edit", "axiom_edit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_rbyy8")
+file = SubResource("Resource_5om8h")
+load_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/LoadButton")
+save_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/SaveButton")
+save_as_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer/SaveAsButton")
+code_edit = NodePath("MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/MarginContainer/CodeEdit")
+axiom_edit = NodePath("MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer/Axiom")
+metadata/_tab_index = 0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s5iiu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="DisableInputOnControls" type="Node" parent="MarginContainer/PanelContainer" node_paths=PackedStringArray("targets")]
+script = ExtResource("2_vhw4p")
+targets = [NodePath("../VBoxContainer/PanelContainer2/MarginContainer/MarginContainer/CodeEdit"), NodePath("../VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer/Axiom")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_type_variation = &"VBoxItem"
+
+[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Save"
+
+[node name="SaveAsButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Save As"
+
+[node name="LoadButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="CodeEdit" type="CodeEdit" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "This is where the fractal program is made"
+emoji_menu_enabled = false
+scroll_smooth = true
+minimap_draw = true
+caret_blink = true
+syntax_highlighter = SubResource("CodeHighlighter_5om8h")
+highlight_current_line = true
+draw_tabs = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+delimiter_comments = Array[String](["//", "/* */", "#"])
+code_completion_prefixes = Array[String](["v"])
+indent_automatic = true
+indent_automatic_prefixes = Array[String](["{", "[", "("])
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+auto_brace_completion_pairs = {
+"\"": "\"",
+"'": "'",
+"(": ")",
+"/*": "*/",
+"[": "]",
+"{": "}"
+}
+script = ExtResource("3_3mq4t")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="Panel" type="Panel" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"SmallLabel"
+text = "Axiom"
+vertical_alignment = 2
+
+[node name="Axiom" type="LineEdit" parent="MarginContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"LineEditCode"
+emoji_menu_enabled = false
+caret_blink = true

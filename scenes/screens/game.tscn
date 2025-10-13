@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0avjutoffgvt"]
+[gd_scene load_steps=21 format=3 uid="uid://c0avjutoffgvt"]
 
 [ext_resource type="Script" uid="uid://clhauhftgrxej" path="res://scenes/screens/game.gd" id="1_clfej"]
 [ext_resource type="PackedScene" uid="uid://prjkae0ddd68" path="res://scenes/nodes/player.tscn" id="1_iwlfa"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://b3mu8cdolpnd" path="res://resources/shaders/bossbar.gdshader" id="3_o78e0"]
 [ext_resource type="PackedScene" uid="uid://bsdhfugfp6hiw" path="res://scenes/pause.tscn" id="6_0q6jn"]
 [ext_resource type="PackedScene" uid="uid://b4lxhna72clcx" path="res://scenes/nodes/bosses/main_boss.tscn" id="6_4ji0l"]
+[ext_resource type="Shader" uid="uid://b7t1xxxyoy2wh" path="res://resources/shaders/uv_add.gdshader" id="6_kauht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6eb"]
 size = Vector2(160, 22)
@@ -28,6 +29,44 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ji0l"]
 content_margin_left = 4.0
 bg_color = Color(0.8, 0, 0.35999987, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0q6jn"]
+noise_type = 2
+frequency = 0.0075
+fractal_type = 0
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_amplitude = 81.1
+domain_warp_frequency = 0.019
+domain_warp_fractal_octaves = 2
+domain_warp_fractal_lacunarity = 2.1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kauht"]
+width = 256
+height = 256
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_0q6jn")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vsgdc"]
+shader = ExtResource("6_kauht")
+shader_parameter/sampler = SubResource("NoiseTexture2D_kauht")
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/time_scale = Vector2(0.1, 0.02)
+shader_parameter/min_value = Vector2(0, 0)
+shader_parameter/max_value = Vector2(0.325, 0.325)
+
+[sub_resource type="Gradient" id="Gradient_4ji0l"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.05, 0.2, 0.5)
+colors = PackedColorArray(0, 0, 0, 0.85882354, 0, 0, 0, 0.32156864, 0, 0, 0, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0q6jn"]
+gradient = SubResource("Gradient_4ji0l")
+width = 16
+height = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o78e0"]
 shader = ExtResource("3_o78e0")
@@ -91,12 +130,17 @@ color = Color(1, 1, 1, 0.13725491)
 [node name="CanvasLayer" type="CanvasLayer" parent="." groups=["ui"]]
 layer = 6
 
-[node name="BossbarLeft" type="VSlider" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_ln6eb")
-anchors_preset = 9
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 4.0
+grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="BossbarLeft" type="VSlider" parent="CanvasLayer/HBoxContainer"]
+material = SubResource("ShaderMaterial_ln6eb")
+layout_mode = 2
 theme_override_icons/grabber = SubResource("PlaceholderTexture2D_o78e0")
 theme_override_icons/grabber_highlight = SubResource("PlaceholderTexture2D_o78e0")
 theme_override_icons/grabber_disabled = SubResource("PlaceholderTexture2D_o78e0")
@@ -107,15 +151,27 @@ scrollable = false
 script = ExtResource("3_mu8e5")
 shader_material = SubResource("ShaderMaterial_ln6eb")
 
-[node name="BossbarRight" type="VSlider" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+texture_filter = 2
+material = SubResource("ShaderMaterial_vsgdc")
+layout_mode = 2
+texture = SubResource("GradientTexture2D_0q6jn")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0)
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+texture_filter = 2
+material = SubResource("ShaderMaterial_vsgdc")
+layout_mode = 2
+texture = SubResource("GradientTexture2D_0q6jn")
+flip_h = true
+
+[node name="BossbarRight" type="VSlider" parent="CanvasLayer/HBoxContainer"]
 material = SubResource("ShaderMaterial_o78e0")
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -4.0
-grow_horizontal = 0
-grow_vertical = 2
+layout_mode = 2
 theme_override_icons/grabber = SubResource("PlaceholderTexture2D_o78e0")
 theme_override_icons/grabber_highlight = SubResource("PlaceholderTexture2D_o78e0")
 theme_override_icons/grabber_disabled = SubResource("PlaceholderTexture2D_o78e0")

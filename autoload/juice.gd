@@ -33,6 +33,9 @@ func _process(delta: float) -> void:
 	var zoom: float = 1.0
 	if zooms != null:
 		for node in zooms.keys():
+			if node == null or node.is_queued_for_deletion():
+				zooms.erase(node)
+				continue
 			zoom += zooms.get(node)
 	
 	camera.zoom = Vector2(zoom, zoom)

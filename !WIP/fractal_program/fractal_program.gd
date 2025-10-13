@@ -259,6 +259,7 @@ func run(axiom: String, depth: int = 4) -> String:
 	var result: String = ""
 
 	for c in axiom:
+		randomize()
 		var found_token: bool = false
 		for k in tokens.keys():
 			if c != k: continue
@@ -279,6 +280,7 @@ func run(axiom: String, depth: int = 4) -> String:
 	var final: String = ""
 
 	for c in result:
+		randomize()
 		var found_token: bool = false
 		for k in tokens.keys():
 			if c != k: continue

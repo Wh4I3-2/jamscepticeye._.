@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://x7lwr8myle1i"
 
 [sub_resource type="Resource" id="Resource_my2jw"]
 script = ExtResource("1_cyo5x")
-path = "res://!WIP/fractal_proc_gen.tscn"
+path = "res://scenes/screens/main_menu.tscn"
 transition_enter = SubResource("Resource_yjrqw")
 transition_exit = SubResource("Resource_vp25l")
 swap_delay = 0.1

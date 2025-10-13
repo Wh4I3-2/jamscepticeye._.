@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7fcgfv62jhml"]
+[gd_scene load_steps=15 format=3 uid="uid://c7fcgfv62jhml"]
 
 [ext_resource type="Theme" uid="uid://wh5irbnqd2fb" path="res://resources/themes/menu_theme.tres" id="1_6rjj5"]
 [ext_resource type="Script" uid="uid://mfotfpyt8i8b" path="res://scenes/compile_shaders.gd" id="1_7lbl8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://cpeev0a6jx458" path="res://resources/shaders/stars.gdshader" id="2_ldw06"]
 [ext_resource type="Shader" uid="uid://73k2frwo68wf" path="res://resources/shaders/invert_screen.gdshader" id="3_6nw38"]
 [ext_resource type="Shader" uid="uid://7oqgh1c564vt" path="res://resources/shaders/corner_radius.gdshader" id="3_maw7i"]
+[ext_resource type="Shader" uid="uid://b7t1xxxyoy2wh" path="res://resources/shaders/uv_add.gdshader" id="4_7nfuj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7lbl8"]
 shader = ExtResource("1_e0dok")
@@ -19,6 +20,14 @@ shader_parameter/top_left = 4.0
 shader_parameter/top_right = 4.0
 shader_parameter/bottom_left = 4.0
 shader_parameter/bottom_right = 4.0
+shader_parameter/texture_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_afoxk"]
+shader = ExtResource("4_7nfuj")
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/time_scale = Vector2(1, 1)
+shader_parameter/min_value = Vector2(0, 0)
+shader_parameter/max_value = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_maw7i"]
 shader = ExtResource("3_6nw38")
@@ -53,6 +62,12 @@ offset_bottom = 40.0
 
 [node name="CornerRadius" type="ColorRect" parent="Shaders"]
 material = SubResource("ShaderMaterial_7nfuj")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UVAdd" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_afoxk")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

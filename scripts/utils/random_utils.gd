@@ -1,11 +1,19 @@
 class_name RandomUtils
 
+static var calls: int = 0
+
 static func weighted_random(weighted_dict: Dictionary) -> Variant:
 	var sum: int = 0
 	for v in weighted_dict.values():
 		sum += int(v)
 	
-	var value: int = randi_range(0, sum)
+	calls = (calls + 43) % 5000
+ 
+	var rand := RandomNumberGenerator.new()
+	rand.seed = calls
+	rand.randomize()
+
+	var value: int = rand.randi_range(0, sum)
 
 	var curr_weight: int = 0
 	for k in weighted_dict.keys():
