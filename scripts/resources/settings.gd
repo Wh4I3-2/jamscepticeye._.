@@ -16,6 +16,8 @@ extends Resource
 @export_category("Accessibility")
 @export_range(0.0, 1.0, 0.01) var screen_shake: float = 1.0 : 
 	set(new): screen_shake = new; emit_changed()
+@export var remove_flashing_fx: bool = false : 
+	set(new): remove_flashing_fx = new; emit_changed()
 
 @export_category("Controls")
 @export var controls_left:       InputEventKey: 

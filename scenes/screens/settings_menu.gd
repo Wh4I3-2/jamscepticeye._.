@@ -6,6 +6,7 @@ extends Menu
 @export var sfx_volume:    HSlider
 @export var fullscreen:    CheckButton
 @export var screen_shake:  HSlider
+@export var flashing_fx:   CheckButton
 
 func _ready() -> void:
 	back_button.pressed.connect(
@@ -38,11 +39,16 @@ func _ready() -> void:
 		func(v: float) -> void: SettingsManager.settings.screen_shake = v
 	)
 
+	flashing_fx.toggled.connect(
+		func(toggled_on: bool) -> void: SettingsManager.settings.remove_flashing_fx = toggled_on
+	)
+
 	SettingsManager.settings.changed.connect(init_settings)
 
 func init_settings() -> void:
-	master_volume.value       = SettingsManager.settings.master_vol
-	music_volume.value        = SettingsManager.settings.music_vol
-	sfx_volume.value          = SettingsManager.settings.sfx_vol
-	fullscreen.button_pressed = SettingsManager.settings.fullscreen
-	screen_shake.value        = SettingsManager.settings.screen_shake
+	master_volume.value        = SettingsManager.settings.master_vol
+	music_volume.value         = SettingsManager.settings.music_vol
+	sfx_volume.value           = SettingsManager.settings.sfx_vol
+	fullscreen.button_pressed  = SettingsManager.settings.fullscreen
+	screen_shake.value         = SettingsManager.settings.screen_shake
+	flashing_fx.button_pressed = SettingsManager.settings.remove_flashing_fx

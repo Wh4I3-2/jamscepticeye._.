@@ -49,6 +49,8 @@ func update() -> void:
 
 	WindowManager.fullscreen = settings.fullscreen
 
+	RenderingServer.global_shader_parameter_set("flashing_fx", !settings.remove_flashing_fx)
+
 	for action in ACTIONS_PROPERTY_MAP.keys():
 		update_input_action(action, ACTIONS_PROPERTY_MAP.get(action))
 

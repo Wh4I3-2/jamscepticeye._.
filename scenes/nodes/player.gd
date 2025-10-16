@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var current: bool = true
 
 @export var tutorial: CanvasLayer
+@export var sprite_modulate: Node2D
+@export var sprite: Sprite2D
 @export var ability_animation: AnimatedSprite2D
 
 @export var blood_particles: CPUParticles2D
@@ -20,6 +22,7 @@ extends CharacterBody2D
 @export var retribution_hold:     float = 0.1
 @export var retribution_window:   float = 2
 @export var retribution_cooldown: float = 2.0
+@export var retribution_penalty:  float = 1.0
 
 @onready var retribution_timer:         Timer = NodeUtils.create_timer(self)
 @onready var retribution_window_timer:   Timer = NodeUtils.create_timer(self, true)
@@ -46,9 +49,18 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 	Juice.zooms.set(self, 0.0)
+	
+	retribution_cooldown_timer.timeout.connect(
+		func() -> void:
+			flash_color(Color("#BAEAD0") * 4.0, 0.4, sprite_modulate)
+			Juice.freeze_frames(0.1)
+	)
 
 func _process(_delta: float) -> void:
-	modulate = lerp(Color.WHITE, Color.DARK_GRAY, retribution_cooldown_timer.time_left / retribution_cooldown)
+	sprite.modulate = (
+		lerp(Color.LIGHT_PINK, Color.DARK_RED, retribution_cooldown_timer.time_left / retribution_cooldown) if !retribution_cooldown_timer.is_stopped() 
+		else Color.WHITE
+	)
 	blood_particles.emitting = !blood_timer.is_stopped()
 
 func _physics_process(delta: float) -> void:
@@ -107,6 +119,10 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	projectile_adopter.monitoring = false
+
+	if Input.is_action_just_pressed("primary"):
+		if retribution_cooldown_timer.is_stopped():
+			retribution_cooldown_timer.start(retribution_penalty)
 	
 	Juice.zooms.set(self, lerpf(Juice.zooms.get(self), 0.0, delta * 8))
 
@@ -174,10 +190,18 @@ func on_hurt(hitbox: HitBox) -> void:
 			die()
 
 
-
 func on_projectile_adopted(projectile: Projectile) -> void:
 	if GameManager.boss == null: return
 	var target: Node2D = GameManager.boss.get_target(projectile.global_position)
 	if target == null: return
 	projectile.direction = projectile.global_position.direction_to(target.global_position)
 	projectile.destroyed.emit()
+
+func flash_color(color: Color, time: float, target: CanvasItem = self) -> void:
+	var init_color: Color = target.modulate
+	target.modulate = color
+
+	await get_tree().create_timer(time).timeout
+
+	if target.modulate == color:
+		target.modulate = init_color

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="StaticSettings" load_steps=8 format=3 uid="uid://3urel7is10vo"]
 
-[ext_resource type="Script" uid="uid://cu5lt8krl5c0q" path="res://scripts/resources/scene_change.gd" id="1_cyo5x"]
-[ext_resource type="Script" uid="uid://dpne6bj5osb4" path="res://scripts/resources/static_settings.gd" id="1_oev5x"]
+[ext_resource type="Script" path="res://scripts/resources/scene_change.gd" id="1_cyo5x"]
+[ext_resource type="Script" path="res://scripts/resources/static_settings.gd" id="1_oev5x"]
 [ext_resource type="Script" uid="uid://x7lwr8myle1i" path="res://scripts/resources/scene_transition.gd" id="2_s12pl"]
 
 [sub_resource type="Resource" id="Resource_yjrqw"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=20 format=3 uid="uid://wh5irbnqd2fb"]
+[gd_resource type="Theme" load_steps=24 format=3 uid="uid://wh5irbnqd2fb"]
 
 [ext_resource type="FontFile" uid="uid://c4mma6tv6123m" path="res://resources/fonts/space_grotesk/SpaceGrotesk-VariableFont_wght.ttf" id="1_wnm0q"]
 [ext_resource type="Texture2D" uid="uid://b2vqro3sfujm6" path="res://resources/textures/ui/checkbox_checked.tres" id="2_0jyfp"]
@@ -74,6 +74,19 @@ content_margin_right = 4.0
 content_margin_bottom = 2.0
 bg_color = Color(1, 1, 1, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgj3i"]
+bg_color = Color(1, 1, 1, 0.45490196)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7utmw"]
+bg_color = Color(1, 1, 1, 0.78039217)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa0py"]
+bg_color = Color(1, 1, 1, 0.9137255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yuhw2"]
+content_margin_right = 2.0
+bg_color = Color(0, 0, 0, 0.45882353)
+
 [resource]
 Button/font_sizes/font_size = 10
 Button/fonts/font = SubResource("FontVariation_wnm0q")
@@ -122,3 +135,8 @@ TitleButton/styles/focus = SubResource("StyleBoxFlat_wnm0q")
 TitleButton/styles/hover = SubResource("StyleBoxFlat_wnm0q")
 TitleButton/styles/normal = SubResource("StyleBoxFlat_wnm0q")
 TitleButton/styles/pressed = SubResource("StyleBoxFlat_wnm0q")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_wgj3i")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_7utmw")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_xa0py")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_yuhw2")
+VScrollBar/styles/scroll_focus = null

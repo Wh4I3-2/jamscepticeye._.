@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://prjkae0ddd68"]
+[gd_scene load_steps=20 format=3 uid="uid://prjkae0ddd68"]
 
 [ext_resource type="Script" uid="uid://dk2abypupry8" path="res://scenes/nodes/player.gd" id="1_d5i2w"]
 [ext_resource type="Texture2D" uid="uid://vx6v4sa1tr2g" path="res://resources/textures/player.aseprite" id="2_1tkno"]
@@ -13,11 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://c6wivuwulqmw6" path="res://addons/kenney_input_prompts/Keyboard & Mouse/Default/keyboard_arrow_left_outline.png" id="7_p4ts4"]
 [ext_resource type="Texture2D" uid="uid://bbmjl7sq2ubvi" path="res://resources/textures/1x1.png" id="12_nckpb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
-size = Vector2(6, 6)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nckpb"]
+size = Vector2(8, 8)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qmni6"]
 radius = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kri6c"]
+size = Vector2(6, 6)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ape5s"]
 viewport_path = NodePath("Tutorial/Theme/TitleScreen/SubViewport")
@@ -36,12 +39,14 @@ interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.2413793, 0.59310347, 0.92068964)
 colors = PackedColorArray(0.7, 0, 0.035000134, 1, 0.7730884, 0, 0.13188851, 1, 0.83391356, 0.21806389, 0.16387782, 1, 0.99, 0.6237, 0.6237, 0.47058824)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tutorial", "ability_animation", "blood_particles", "hurtbox", "projectile_adopter", "retribution_collision")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tutorial", "sprite_modulate", "sprite", "ability_animation", "blood_particles", "hurtbox", "projectile_adopter", "retribution_collision")]
 texture_filter = 1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_d5i2w")
 tutorial = NodePath("Tutorial")
+sprite_modulate = NodePath("SpriteModulate")
+sprite = NodePath("SpriteModulate/Sprite2D")
 ability_animation = NodePath("AbilityAnimation")
 blood_particles = NodePath("Node2D/Blood")
 hurtbox = NodePath("HurtBox")
@@ -50,17 +55,19 @@ retribution_collision = NodePath("ProjectileAdopter/CollisionShape2D2")
 diagonal_strength = 0.1
 retribution_radius = 48.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="SpriteModulate" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="SpriteModulate"]
 texture = ExtResource("2_1tkno")
 
 [node name="AbilityAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -1)
 sprite_frames = ExtResource("3_p4ts4")
 animation = &"None"
 frame_progress = 0.6429033
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_kri6c")
+shape = SubResource("RectangleShape2D_nckpb")
 
 [node name="ProjectileAdopter" type="Area2D" parent="." node_paths=PackedStringArray("projectile_owner")]
 collision_layer = 8
@@ -174,6 +181,7 @@ z_index = 1
 [node name="Blood" type="CPUParticles2D" parent="Node2D"]
 z_index = -1
 rotation = 3.1415927
+emitting = false
 amount = 40
 texture = ExtResource("12_nckpb")
 lifetime = 0.84

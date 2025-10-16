@@ -47,10 +47,14 @@ func on_hurtbox_hurt(_hurtbox: HurtBox, hitbox: HitBox) -> void:
 	health -= hitbox.damage
 
 	Juice.screen_shake(hitbox.damage * 0.5)
+	
 	Juice.freeze_frames(0.05)
-	hit_modulater.self_modulate += Color(1000.0, 1000.0, 1000.0)
+
+	if SettingsManager.settings.remove_flashing_fx: return
+	
+	hit_modulater.self_modulate += Color(10.0, 10.0, 10.0)
 
 	await Juice.freeze_timer.timeout
 	await get_tree().create_timer(0.05).timeout
 
-	hit_modulater.self_modulate -= Color(1000.0, 1000.0, 1000.0)
+	hit_modulater.self_modulate -= Color(10.0, 10.0, 10.0)
