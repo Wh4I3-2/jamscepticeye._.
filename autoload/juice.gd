@@ -12,7 +12,7 @@ var camera: Camera2D
 
 var screen_shake_strength: float = 0.0
 
-var zooms: Dictionary[Node, float]
+var zooms: Dictionary[Node, float] = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
